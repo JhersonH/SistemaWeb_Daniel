@@ -1,0 +1,44 @@
+{% extends 'base/base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Mis Cursos{% endblock %}
+
+{% block inner_content %}
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    {% for assignment in page_obj %}
+    <div class="col-md-4 col-lg-3 mb-4">
+      <div class="card course-card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title text-primary fw-bold">{{ assignment.course.name }}</h5>
+          <p class="card-text mb-2">
+            <strong>Nivel:</strong> {{ assignment.level }}<br>
+            <strong>Grado:</strong> {{ assignment.grade }}<br>
+            <strong>Sección:</strong> {{ assignment.section }}<br>
+            <strong>Año Académico:</strong> {{ assignment.academic_year }}
+          </p>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+      <p class="text-muted">No tienes cursos asignados.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Paginación centrada -->
+  <div class="pagination-container d-flex justify-content-center mt-4">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+      {% endif %}
+      <li class="page-item disabled">
+        <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+      </li>
+      {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+      {% endif %}
+    </ul>
+  </div>
+
+</div>
+{% endblock %}

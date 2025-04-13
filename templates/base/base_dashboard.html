@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard | School System{% endblock %}
+
+{% block content %}
+<div id="dashboardContainer" class="dashboard-container">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-logo text-center">
+      <a href="{% url 'teacher_dashboard' %}" style="text-decoration: none; color: white;">
+        <img src="{% static 'img/logo.jpg' %}" alt="Logo Colegio" style="width: 70px; display: block; margin: 0 auto;">
+        <h5 style="margin-top: 10px;">Sistema Escolar</h5>
+      </a>
+    </div>
+    <ul class="sidebar-menu">
+      <li><a href="{% url 'teacher_courses' %}">Mis Cursos</a></li>
+      <li><a href="#">Documentos</a></li>
+      <li><a href="#">Horarios</a></li>
+      <li><a href="#">Perfil Docente</a></li>
+      <li><a href="#">Configuración</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <div class="dashboard-navbar">
+      <div>
+        <button id="toggleSidebar" class="toggle-sidebar-btn">☰</button>
+        <span class="user-label" title="{{ user.first_name }} {{ user.last_name }}">
+          Bienvenido, {{ user.first_name }} {{ user.last_name }}
+        </span>
+      </div>
+      <form method="post" action="{% url 'logout' %}" class="logout-form">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-light btn-sm">Salir</button>
+      </form>
+    </div>
+
+    <div class="dashboard-body">
+      {% block inner_content %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,21 @@
+<h2>{{ assignment.course.name }} - {{ assignment.level|capfirst }} {{ assignment.grade }}{{ assignment.section }}</h2>
+
+<h3>Uploaded Documents</h3>
+<ul>
+    {% for doc in documents %}
+        <li>
+            {{ doc.title }} ({{ doc.document_type }}) - <a href="{{ doc.file.url }}" target="_blank">Download</a>
+        </li>
+    {% empty %}
+        <li>No documents uploaded.</li>
+    {% endfor %}
+</ul>
+
+<h3>Upload New Document</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
+
+<a href="{% url 'teacher_dashboard' %}">⬅ Back to dashboard</a>
