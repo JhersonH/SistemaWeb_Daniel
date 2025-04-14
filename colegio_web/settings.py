@@ -43,9 +43,6 @@ INSTALLED_APPS = [
     'class_assignment',
     'schedule',
     'document',
-
-
-    'django_extensions',
 ]
 
 MIDDLEWARE = [
