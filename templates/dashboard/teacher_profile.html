@@ -1,0 +1,87 @@
+{% extends 'base/base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Perfil Docente{% endblock %}
+
+{% block inner_content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+
+      <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center px-4 py-3">
+          <h5 class="mb-0"><i class="bi bi-person-circle me-2"></i>Perfil del Docente</h5>
+          <a href="{% url 'edit_teacher_profile' %}" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-pencil-square"></i> Editar Perfil
+          </a>
+        </div>
+
+        <div class="card-body px-4 py-5">
+
+          <div class="row mb-4 align-items-center">
+            <div class="col-md-4 text-center">
+              {% if teacher.photo %}
+                <img src="{{ teacher.photo.url }}" class="rounded-circle shadow" style="width: 160px;" alt="Foto de perfil">
+              {% else %}
+                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 160px; height: 160px;">
+                  <i class="bi bi-person-fill display-4 text-muted"></i>
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-md-8">
+              <h3 class="fw-bold text-dark">{{ teacher.user.first_name }} {{ teacher.user.last_name }}</h3>
+              <p class="text-muted mb-2"><i class="bi bi-envelope me-2"></i> {{ teacher.user.email }}</p>
+              <p class="text-muted mb-2"><i class="bi bi-phone me-2"></i> {{ teacher.phone_number|default:"No hay información" }}</p>
+              <p class="text-muted"><i class="bi bi-geo-alt me-2"></i> {{ teacher.address|default:"No hay información" }}</p>
+            </div>
+          </div>
+
+          <hr class="mb-4">
+
+          <div class="row gy-4">
+            <div class="col-md-6">
+              <h6 class="text-primary fw-bold"><i class="bi bi-credit-card me-2"></i>DNI</h6>
+              <p class="text-secondary">{{ teacher.dni|default:"No hay información" }}</p>
+            </div>
+            <div class="col-md-6">
+              <h6 class="text-primary fw-bold"><i class="bi bi-calendar-event me-2"></i>Fecha de nacimiento</h6>
+              <p class="text-secondary">{{ teacher.birth_date|date:"d/m/Y"|default:"No hay información" }}</p>
+            </div>
+            <div class="col-md-6">
+              <h6 class="text-primary fw-bold"><i class="bi bi-mortarboard-fill me-2"></i>Nivel de enseñanza</h6>
+              <p class="text-secondary text-capitalize">{{ teacher.teaching_level|default:"No hay información" }}</p>
+            </div>
+            <div class="col-md-6">
+              <h6 class="text-primary fw-bold"><i class="bi bi-book-half me-2"></i>Área de enseñanza</h6>
+              <p class="text-secondary">{{ teacher.teaching_area|default:"No hay información" }}</p>
+            </div>
+            <div class="col-md-6">
+              <h6 class="text-primary fw-bold"><i class="bi bi-briefcase-fill me-2"></i>Condición laboral</h6>
+              <p class="text-secondary text-capitalize">{{ teacher.labor_condition|default:"No hay información" }}</p>
+            </div>
+            <div class="col-md-6">
+              <h6 class="text-primary fw-bold"><i class="bi bi-calendar-check-fill me-2"></i>Fecha de contratación</h6>
+              <p class="text-secondary">{{ teacher.hiring_date|date:"d/m/Y"|default:"No hay información" }}</p>
+            </div>
+            <div class="col-md-6">
+              <h6 class="text-primary fw-bold"><i class="bi bi-award-fill me-2"></i>Profesión</h6>
+              <p class="text-secondary">{{ teacher.profession|default:"No hay información" }}</p>
+            </div>
+            <div class="col-md-6">
+              <h6 class="text-primary fw-bold"><i class="bi bi-bookmark-check-fill me-2"></i>Grado académico</h6>
+              <p class="text-secondary">{{ teacher.academic_degree|default:"No hay información" }}</p>
+            </div>
+          </div>
+
+          {% if teacher.notes %}
+          <hr class="my-4">
+          <h6 class="text-primary fw-bold"><i class="bi bi-journal-text me-2"></i>Notas adicionales</h6>
+          <p class="text-secondary">{{ teacher.notes }}</p>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

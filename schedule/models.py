@@ -6,11 +6,6 @@ class Schedule(models.Model):
     class_assignment = models.ForeignKey(ClassAssignment, on_delete=models.CASCADE)
 
     DAY_CHOICES = [
-        ('monday', 'Monday'),
-        ('tuesday', 'Tuesday'),
-        ('wednesday', 'Wednesday'),
-        ('thursday', 'Thursday'),
-        ('friday', 'Friday'),
         ('lunes', 'Lunes'),
         ('martes', 'Martes'),
         ('miércoles', 'Miércoles'),

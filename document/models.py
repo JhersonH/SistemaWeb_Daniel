@@ -14,9 +14,9 @@ class Document(models.Model):
     description = models.TextField(blank=True, null=True)
 
     DOCUMENT_TYPE_CHOICES = [
-        ('evaluation', 'Evaluation'),
+        ('evaluacion', 'Evaluacion'),
         ('material', 'Material'),
-        ('report', 'Report'),
+        ('reporte', 'Reporte'),
     ]
     document_type = models.CharField(max_length=15, choices=DOCUMENT_TYPE_CHOICES)
 

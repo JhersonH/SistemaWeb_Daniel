@@ -22,9 +22,8 @@ class Teacher(models.Model):
     address = models.CharField(max_length=255)
 
     LEVEL_CHOICES = [
-        ('initial', 'Initial'),
-        ('primary', 'Primary'),
-        ('secondary', 'Secondary'),
+        ('primaria', 'Primaria'),
+        ('secundaria', 'Secundaria'),
     ]
     teaching_level = models.CharField(max_length=10, choices=LEVEL_CHOICES)
 
@@ -35,14 +34,18 @@ class Teacher(models.Model):
     teaching_area = models.CharField(max_length=30, validators=[area_validator])
 
     CONDITION_CHOICES = [
-        ('appointed', 'Appointed'),
-        ('contracted', 'Contracted'),
-        ('retired', 'Retired'),
+        ('nombrado', 'Nombrado'),
+        ('contratado', 'Contratado'),
+        ('jubilado', 'Jubilado'),
     ]
     labor_condition = models.CharField(max_length=10, choices=CONDITION_CHOICES)
 
     hiring_date = models.DateField()
     notes = models.TextField(blank=True, null=True)
+
+    photo = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    profession = models.CharField(max_length=50, blank=True)
+    academic_degree = models.CharField(max_length=50, blank=True)
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"

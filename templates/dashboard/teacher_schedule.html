@@ -1,0 +1,200 @@
+{% extends 'base/base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Mis Horarios{% endblock %}
+
+{% block inner_content %}
+
+{% if messages %}
+  <div class="container mt-2">
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<div class="px-4 d-flex justify-content-between align-items-center mb-3">
+  <!-- Título -->
+  <h3 class="fw-bold text-primary">
+    <span class="d-none d-md-inline">📅 Mis Horarios</span>
+    <span class="d-inline d-md-none">Horarios</span>
+  </h3>
+
+  <!-- Botón modal -->
+  <button class="btn btn-success d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#addScheduleModal">
+    ➕ Registrar Horario
+  </button>
+  <button class="btn btn-outline-success btn-sm d-inline d-md-none" data-bs-toggle="modal" data-bs-target="#addScheduleModal" title="Nuevo horario">
+    <i class="bi bi-plus-lg"></i>
+  </button>
+</div>
+
+  <!-- Calendario (visible solo en desktop) -->
+  <div id="calendar-wrapper" class="d-none d-md-block">
+    <div id="calendar"></div>
+  </div>
+
+  <!-- Lista de clases en formato card (solo en mobile) -->
+  <div id="mobile-schedule" class="d-block d-md-none">
+    {% if weekly_schedules %}
+      {% for sched in weekly_schedules %}
+        <div class="card mb-3">
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="card-title text-primary mb-1">{{ sched.day_of_week }}</h6>
+              <p class="card-text mb-0"><strong>{{ sched.class_assignment.course.name }}</strong></p>
+              <p class="mb-0">⏰ {{ sched.start_time|time:"H:i" }} - {{ sched.end_time|time:"H:i" }}</p>
+            </div>
+            <form method="post" action="{% url 'delete_schedule' sched.id %}" onsubmit="return confirm('¿Estás seguro de eliminar este horario?');">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-sm btn-outline-danger ms-2">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-muted">No tienes clases programadas hoy.</p>
+    {% endif %}
+  </div>
+
+<!-- Modal: Registrar nuevo horario -->
+<div class="modal fade" id="addScheduleModal" tabindex="-1" aria-labelledby="addScheduleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form method="post" action="{% url 'add_schedule' %}">
+        {% csrf_token %}
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="addScheduleModalLabel">Registrar Nuevo Horario</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Aquí pondremos los campos del formulario más adelante -->
+          <div class="mb-3">
+            <label for="day" class="form-label">Día de la semana:</label>
+            <select name="day" id="day" class="form-select" required>
+              <option value="">Seleccione</option>
+              <option value="Lunes">Lunes</option>
+              <option value="Martes">Martes</option>
+              <option value="Miércoles">Miércoles</option>
+              <option value="Jueves">Jueves</option>
+              <option value="Viernes">Viernes</option>
+              <option value="Sábado">Sábado</option>
+              <option value="Domingo">Domingo</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="start_time" class="form-label">Hora de inicio:</label>
+              <input type="time" name="start_time" id="start_time" class="form-control" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="end_time" class="form-label">Hora de fin:</label>
+              <input type="time" name="end_time" id="end_time" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="class_assignment" class="form-label">Curso:</label>
+            <select name="class_assignment" id="class_assignment" class="form-select" required>
+              {% for assignment in assignments %}
+                <option value="{{ assignment.id }}">{{ assignment.course.name }} - {{ assignment.grade }}{{ assignment.section }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Guardar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para ver eventos del día -->
+<div class="modal fade" id="calendarDayDetailsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Clases del Día</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="calendarDayDetailsBody"></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      locale: 'es',
+      initialView: 'dayGridMonth',
+      dayHeaderFormat: { weekday: 'long' },
+      dayMaxEvents: 2,
+      contentHeight: 900,
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: ''
+      },
+      events: {{ events_json|safe }},
+
+      moreLinkClick: function(info) {
+        const events = info.allSegs.map(seg => seg.event);
+
+        let content = `<ul class="list-group text-start">`;
+        for (const event of events) {
+          content += `
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>${event.title}</strong>
+              </div>
+              <form method="post" action="/schedules/delete/${event.id}/" onsubmit="return confirm('¿Estás seguro de eliminar este horario?');">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <button type="submit" class="btn btn-sm btn-outline-danger ms-2">
+                  <i class="bi bi-trash3"></i>
+                </button>
+              </form>
+            </li>`;
+        }
+        content += `</ul>`;
+
+        const modalBody = document.getElementById('calendarDayDetailsBody');
+        if (modalBody) {
+          modalBody.innerHTML = content;
+
+          const modal = new bootstrap.Modal(document.getElementById('calendarDayDetailsModal'));
+          modal.show();
+        }
+
+        return 'none';
+      }
+    });
+
+    calendar.render();
+  });
+</script>
+
+<script>
+  setTimeout(() => {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+      const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+      bsAlert.close();
+    }
+  }, 3000); // 3 segundos
+</script>
+{% endblock %}

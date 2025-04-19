@@ -1,0 +1,130 @@
+{% extends 'base/base_dashboard.html' %}
+{% block title %}Mis Documentos{% endblock %}
+
+{% block inner_content %}
+
+{% if messages %}
+  <div class="container mt-2">
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<div class="container py-4">
+  <h3 class="text-primary fw-bold mb-4">📄 Documentos Subidos</h3>
+
+  <!-- FILTROS -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-4">
+      <label for="course" class="form-label">Filtrar por curso:</label>
+      <select id="course" name="course" class="form-select">
+        <option value="">Todos</option>
+        {% for course in all_courses %}
+          <option value="{{ course }}" {% if course == course_filter %}selected{% endif %}>{{ course }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="year" class="form-label">Filtrar por año académico:</label>
+      <select id="year" name="year" class="form-select">
+        <option value="">Todos</option>
+        {% for year in all_years %}
+          <option value="{{ year }}" {% if year == year_filter %}selected{% endif %}>{{ year }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+      <button type="submit" class="btn btn-primary me-2">Filtrar</button>
+      <a href="{% url 'teacher_documents' %}" class="btn btn-secondary">Limpiar</a>
+    </div>
+  </form>
+
+  <!-- RESULTADOS -->
+  {% if documents %}
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>Título</th>
+            <th>Tipo</th>
+            <th>Curso</th>
+            <th>Año</th>
+            <th>Archivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for doc in documents %}
+            <tr>
+              <td>{{ doc.title }}</td>
+              <td>{{ doc.document_type }}</td>
+              <td>{{ doc.class_assignment.course.name }}</td>
+              <td>{{ doc.class_assignment.academic_year }}</td>
+              <td class="text-center">
+                <a href="{{ doc.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary me-2">Descargar</a>
+
+                <!-- Botón que abre el modal -->
+                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ doc.id }}">
+                  Eliminar
+                </button>
+
+                <!-- Modal Bootstrap -->
+                <div class="modal fade" id="deleteModal{{ doc.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ doc.id }}" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <form method="post" action="{% url 'delete_document' doc.id %}">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                          <h5 class="modal-title text-danger" id="deleteModalLabel{{ doc.id }}">Confirmar Eliminación</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                          ¿Estás seguro de que deseas eliminar el documento <strong>{{ doc.title }}</strong>?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PAGINACIÓN -->
+    <div class="d-flex justify-content-center mt-4">
+      <ul class="pagination">
+        {% if documents.has_previous %}
+          <li class="page-item"><a class="page-link" href="?{% if course_filter %}course={{ course_filter }}&{% endif %}{% if year_filter %}year={{ year_filter }}&{% endif %}page={{ documents.previous_page_number }}">Anterior</a></li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">Página {{ documents.number }} de {{ documents.paginator.num_pages }}</span></li>
+        {% if documents.has_next %}
+          <li class="page-item"><a class="page-link" href="?{% if course_filter %}course={{ course_filter }}&{% endif %}{% if year_filter %}year={{ year_filter }}&{% endif %}page={{ documents.next_page_number }}">Siguiente</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  {% else %}
+    <p class="text-muted">No se encontraron documentos con los filtros seleccionados.</p>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  setTimeout(() => {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+      const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+      bsAlert.close();
+    }
+  }, 3000); // 3 segundos
+</script>
+{% endblock %}

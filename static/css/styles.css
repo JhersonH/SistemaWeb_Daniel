@@ -1,6 +1,12 @@
 body {
-    background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  /* Puedes quitar el background si ya no lo necesitas aquí */
 }
+
 .login-card {
     background: white;
     border-radius: 10px;
@@ -70,6 +76,10 @@ body {
     padding: 3px 10px;
     font-size: 12px;
   }
+
+  .dashboard-container.collapsed::before {
+    display: block;
+  }
 }
 
   .dashboard-navbar .toggle-sidebar-btn {
@@ -87,10 +97,4 @@ body {
   background: rgba(0,0,0,0.3);
   z-index: 998;
   display: none;
-}
-
-@media (max-width: 768px) {
-  .dashboard-container.collapsed::before {
-    display: block;
-  }
 }

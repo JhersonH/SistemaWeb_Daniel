@@ -16,9 +16,9 @@
     </div>
     <ul class="sidebar-menu">
       <li><a href="{% url 'teacher_courses' %}">Mis Cursos</a></li>
-      <li><a href="#">Documentos</a></li>
-      <li><a href="#">Horarios</a></li>
-      <li><a href="#">Perfil Docente</a></li>
+      <li><a href="{% url 'teacher_documents' %}">Documentos</a></li>
+      <li><a href="{% url 'teacher_schedule' %}">Horarios</a></li>
+      <li><a href="{% url 'teacher_profile' %}">Perfil Docente</a></li>
       <li><a href="#">Configuración</a></li>
     </ul>
   </nav>
@@ -42,9 +42,6 @@
       {% block inner_content %}{% endblock %}
     </div>
   </div>
-</div>
-{% endblock %}
 
-{% block scripts %}
-<script src="{% static 'js/dashboard.js' %}"></script>
+</div>
 {% endblock %}

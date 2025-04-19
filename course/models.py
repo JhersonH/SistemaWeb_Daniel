@@ -9,9 +9,8 @@ class Course(models.Model):
     name = models.CharField(max_length=30, validators=[name_validator])
 
     LEVEL_CHOICES = [
-        ('initial', 'Initial'),
-        ('primary', 'Primary'),
-        ('secondary', 'Secondary'),
+        ('primaria', 'Primaria'),
+        ('secundaria', 'Secundaria'),
     ]
     level = models.CharField(max_length=10, choices=LEVEL_CHOICES)
 

@@ -1,0 +1,166 @@
+{% extends 'base/base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Editar Perfil Docente{% endblock %}
+
+{% block inner_content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10 col-xl-9">
+      <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Editar Perfil del Docente</h4>
+          <a href="{% url 'change_password' %}" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-key"></i> Cambiar Contraseña
+          </a>
+        </div>
+
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Imagen de perfil editable -->
+            <div class="text-center my-4">
+  <label for="photo" style="cursor: pointer; display: inline-block;">
+    {% if teacher.photo %}
+      <img id="photoPreview"
+           src="{{ teacher.photo.url }}"
+           alt="Foto de perfil"
+           class="rounded-circle shadow"
+           style="width: 150px; height: 150px; object-fit: cover;">
+    {% else %}
+      <i id="photoPreviewIcon"
+         class="bi bi-person-circle text-secondary"
+         style="font-size: 6rem;"></i>
+    {% endif %}
+    <input type="file" name="photo" id="photo" accept="image/*" style="display: none;">
+  </label>
+  <p class="text-muted mt-2">Haz clic en el ícono para subir una foto</p>
+</div>
+
+
+            <!-- Nombres -->
+            <div class="mb-3">
+              <label for="first_name" class="form-label"><i class="bi bi-person"></i> Nombres:</label>
+              <input type="text" class="form-control" name="first_name" id="first_name" value="{{ teacher.user.first_name }}">
+            </div>
+
+            <div class="mb-3">
+              <label for="last_name" class="form-label"><i class="bi bi-person"></i> Apellidos:</label>
+              <input type="text" class="form-control" name="last_name" id="last_name" value="{{ teacher.user.last_name }}">
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label"><i class="bi bi-envelope"></i> Correo electrónico:</label>
+              <input type="email" class="form-control" name="email" id="email" value="{{ teacher.user.email }}">
+            </div>
+
+            <!-- Datos personales -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="dni" class="form-label"><i class="bi bi-credit-card-2-front"></i> DNI:</label>
+                <input type="text" class="form-control" name="dni" id="dni" value="{{ teacher.dni }}">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="birth_date" class="form-label"><i class="bi bi-calendar-event"></i> Fecha de nacimiento:</label>
+                <input type="date" class="form-control" name="birth_date" id="birth_date" value="{{ teacher.birth_date|date:'Y-m-d' }}">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="phone_number" class="form-label"><i class="bi bi-telephone"></i> Teléfono:</label>
+                <input type="text" class="form-control" name="phone_number" id="phone_number" value="{{ teacher.phone_number }}">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="address" class="form-label"><i class="bi bi-geo-alt"></i> Dirección:</label>
+                <input type="text" class="form-control" name="address" id="address" value="{{ teacher.address }}">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="teaching_level" class="form-label"><i class="bi bi-easel"></i> Nivel de enseñanza:</label>
+                <select class="form-select" name="teaching_level" id="teaching_level">
+                  {% for val, label in teacher.LEVEL_CHOICES %}
+                    <option value="{{ val }}" {% if teacher.teaching_level == val %}selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="teaching_area" class="form-label"><i class="bi bi-journals"></i> Área de enseñanza:</label>
+                <input type="text" class="form-control" name="teaching_area" id="teaching_area" value="{{ teacher.teaching_area }}">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="labor_condition" class="form-label"><i class="bi bi-briefcase"></i> Condición laboral:</label>
+                <select class="form-select" name="labor_condition" id="labor_condition">
+                  {% for val, label in teacher.CONDITION_CHOICES %}
+                    <option value="{{ val }}" {% if teacher.labor_condition == val %}selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="hiring_date" class="form-label"><i class="bi bi-calendar-check"></i> Fecha de contratación:</label>
+                <input type="date" class="form-control" name="hiring_date" id="hiring_date" value="{{ teacher.hiring_date|date:'Y-m-d' }}">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="profession" class="form-label"><i class="bi bi-award"></i> Profesión:</label>
+                <input type="text" class="form-control" name="profession" id="profession" value="{{ teacher.profession }}">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="academic_degree" class="form-label"><i class="bi bi-mortarboard"></i> Grado académico:</label>
+                <input type="text" class="form-control" name="academic_degree" id="academic_degree" value="{{ teacher.academic_degree }}">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="notes" class="form-label"><i class="bi bi-card-text"></i> Notas adicionales:</label>
+              <textarea class="form-control" name="notes" id="notes" rows="3">{{ teacher.notes }}</textarea>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success btn-lg">
+                <i class="bi bi-check-circle"></i> Guardar Cambios
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts%}
+<script>
+  document.getElementById("photo").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const previewIcon = document.getElementById("photoPreviewIcon");
+        if (previewIcon) {
+          // Si hay ícono, lo quitamos y lo reemplazamos por la imagen
+          previewIcon.outerHTML = `
+            <img id="photoPreview"
+                 src="${e.target.result}"
+                 alt="Foto de perfil"
+                 class="rounded-circle shadow"
+                 style="width: 150px; height: 150px; object-fit: cover;">`;
+        } else {
+          // Si ya hay imagen previa, solo la actualizamos
+          document.getElementById("photoPreview").src = e.target.result;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+
+{% endblock %}

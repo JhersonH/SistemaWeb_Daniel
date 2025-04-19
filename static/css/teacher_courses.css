@@ -41,3 +41,27 @@ html, body {
   padding-top: 40px;   /* 🔹 da espacio superior */
   margin-bottom: 40px; /* 🔹 opcional para separar del fondo */
 }
+
+.pagination {
+  gap: 6px;
+}
+
+.page-item .page-link {
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 500;
+  border: 1px solid #dee2e6;
+  transition: all 0.2s ease;
+}
+
+.page-item .page-link:hover {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.page-item.disabled .page-link {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border-color: #dee2e6;
+}

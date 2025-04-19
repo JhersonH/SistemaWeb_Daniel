@@ -5,7 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7782bd5-95d5-4fd8-a034-b272b3584fae" name="Changes" comment="Updated settings">
+      <change afterPath="$PROJECT_DIR$/static/css/teacher_schedule.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher/templatetags/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher/templatetags/form_filters.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard/change_password.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard/edit_teacher_profile.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard/teacher_documents.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard/teacher_profile.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/dashboard/teacher_schedule.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class_assignment/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/class_assignment/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class_assignment/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/class_assignment/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/colegio_web/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/colegio_web/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/course/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/document/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/document/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/document/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schedule/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/dashboard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/teacher_courses.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/teacher_courses.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/teacher_courses.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/teacher/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/teacher/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base/base_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base_dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard/course_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/course_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard/teacher_courses.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/teacher_courses.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,18 +58,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="SET_USER_NAME_GLOBALLY" value="false" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "JhersonH"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JhersonH&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/JhersonH/SistemaWeb_Daniel.git",
-    "accountId": "434ca5f5-a6cb-445f-8090-5732a72822b1"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JhersonH/SistemaWeb_Daniel.git&quot;,
+    &quot;accountId&quot;: &quot;434ca5f5-a6cb-445f-8090-5732a72822b1&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -52,19 +81,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jherson/PycharmProjects/SistemaWeb_Daniel/templates/dashboard&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Users/Jherson/PycharmProjects/SistemaWeb_Daniel/static/css"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Jherson\PycharmProjects\SistemaWeb_Daniel\static\css" />
       <recent name="C:\Users\Jherson\PycharmProjects\SistemaWeb_Daniel\templates\dashboard" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jherson\PycharmProjects\SistemaWeb_Daniel\teacher" />
       <recent name="C:\Users\Jherson\PycharmProjects\SistemaWeb_Daniel\dashboard\templates\dashboard" />
     </key>
   </component>
@@ -124,7 +155,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744590530940</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Updated settings">
+      <option name="closed" value="true" />
+      <created>1744590632129</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744590632129</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -1,21 +1,92 @@
-<h2>{{ assignment.course.name }} - {{ assignment.level|capfirst }} {{ assignment.grade }}{{ assignment.section }}</h2>
+{% extends 'base/base_dashboard.html' %}
+{% load static %}
 
-<h3>Uploaded Documents</h3>
-<ul>
-    {% for doc in documents %}
-        <li>
-            {{ doc.title }} ({{ doc.document_type }}) - <a href="{{ doc.file.url }}" target="_blank">Download</a>
-        </li>
-    {% empty %}
-        <li>No documents uploaded.</li>
-    {% endfor %}
-</ul>
+{% block title %}Detalle del Curso{% endblock %}
 
-<h3>Upload New Document</h3>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Upload</button>
-</form>
+{% block inner_content %}
+<div class="main-content">
+  <div class="container py-4">
+    <!-- Cabecera del curso -->
+    <div class="text-center mb-4">
+      <h2 class="text-primary fw-bold">{{ assignment.course.name }}</h2>
+      <p class="mb-0">
+        {{ assignment.level|capfirst }} - Grado {{ assignment.grade }}{{ assignment.section }} - Año {{ assignment.academic_year }}
+      </p>
+    </div>
 
-<a href="{% url 'teacher_dashboard' %}">⬅ Back to dashboard</a>
+    <!-- Contenido: Documentos + Formulario -->
+    <div class="row justify-content-center">
+      <!-- Documentos subidos con scroll interno -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Documentos Subidos</h5>
+          </div>
+          <div class="card-body p-0" style="max-height: 300px; overflow-y: auto;">
+            {% if documents %}
+              <ul class="list-group list-group-flush">
+                {% for doc in documents %}
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                      <strong>{{ doc.title }}</strong><br>
+                      <small class="text-muted">{{ doc.document_type }}</small>
+                    </div>
+                    <a href="{{ doc.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary">Descargar</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p class="text-muted p-3 mb-0">Aún no se han subido documentos para este curso.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Subida de documento -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Subir Nuevo Documento</h5>
+          </div>
+          <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <div class="mb-3">
+                <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                  <div class="text-danger">{{ form.title.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div class="mb-3">
+                <label for="{{ form.document_type.id_for_label }}" class="form-label">{{ form.document_type.label }}</label>
+                {{ form.document_type }}
+                {% if form.document_type.errors %}
+                  <div class="text-danger">{{ form.document_type.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div class="mb-3">
+                <label for="{{ form.file.id_for_label }}" class="form-label">{{ form.file.label }}</label>
+                {{ form.file }}
+                {% if form.file.errors %}
+                  <div class="text-danger">{{ form.file.errors }}</div>
+                {% endif %}
+              </div>
+
+              <button type="submit" class="btn btn-success w-100">Subir Archivo</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón volver -->
+    <div class="text-center mt-3">
+      <a href="{% url 'teacher_courses' %}" class="btn btn-secondary">← Volver a Mis Cursos</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
