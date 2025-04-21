@@ -1,92 +1,139 @@
 {% extends 'base/base_dashboard.html' %}
 {% load static %}
+{% load widget_tweaks %}
+{% load i18n %}
 
-{% block title %}Detalle del Curso{% endblock %}
+{% block title %}{% trans "Detalle del Curso" %}{% endblock %}
 
 {% block inner_content %}
-<div class="main-content">
-  <div class="container py-4">
-    <!-- Cabecera del curso -->
-    <div class="text-center mb-4">
-      <h2 class="text-primary fw-bold">{{ assignment.course.name }}</h2>
-      <p class="mb-0">
-        {{ assignment.level|capfirst }} - Grado {{ assignment.grade }}{{ assignment.section }} - Año {{ assignment.academic_year }}
-      </p>
+<div class="px-6 py-8">
+
+  <!-- Cabecera del Curso -->
+  <div class="text-center mb-10">
+    <h2 class="text-3xl font-bold text-blue-800 uppercase">{{ assignment.course.name }}</h2>
+    <p class="text-gray-600 mt-1">
+      {{ assignment.level|capfirst }} - {% trans "Grado" %} {{ assignment.grade }}{{ assignment.section }} - {% trans "Año" %} {{ assignment.academic_year }}
+    </p>
+  </div>
+
+  {% if request.user.teacher.role.role_type == "teacher" %}
+  <!-- Contenido: Documentos y Formulario -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Lista de Documentos -->
+    <div class="bg-white rounded-xl shadow border border-gray-200">
+      <div class="bg-blue-600 text-white px-5 py-3 rounded-t-xl">
+        <h5 class="font-semibold text-lg">📄 {% trans "Documentos Subidos" %}</h5>
+      </div>
+      <div class="max-h-80 overflow-y-auto divide-y divide-gray-200">
+
+        {% if documents %}
+          {% for doc in documents %}
+            <div class="flex justify-between items-center px-5 py-3 hover:bg-gray-50 transition">
+              <div>
+                <p class="font-semibold text-gray-800">{{ doc.title }}</p>
+                <p class="text-sm text-gray-500">{{ doc.document_type }}</p>
+              </div>
+              <a href="{{ doc.file.url }}" target="_blank" class="text-sm font-medium text-blue-600 hover:underline">
+                {% trans "Descargar" %}
+              </a>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="text-gray-500 px-5 py-4">{% trans "Aún no se han subido documentos para este curso." %}</p>
+        {% endif %}
+
+      </div>
     </div>
 
-    <!-- Contenido: Documentos + Formulario -->
-    <div class="row justify-content-center">
-      <!-- Documentos subidos con scroll interno -->
-      <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
-          <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Documentos Subidos</h5>
-          </div>
-          <div class="card-body p-0" style="max-height: 300px; overflow-y: auto;">
-            {% if documents %}
-              <ul class="list-group list-group-flush">
-                {% for doc in documents %}
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>{{ doc.title }}</strong><br>
-                      <small class="text-muted">{{ doc.document_type }}</small>
-                    </div>
-                    <a href="{{ doc.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary">Descargar</a>
-                  </li>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p class="text-muted p-3 mb-0">Aún no se han subido documentos para este curso.</p>
+    <!-- Formulario de Subida -->
+    <div class="bg-white rounded-xl shadow border border-gray-200">
+      <div class="bg-green-600 text-white px-5 py-3 rounded-t-xl">
+        <h5 class="font-semibold text-lg">📤 {% trans "Subir Nuevo Documento" %}</h5>
+      </div>
+      <div class="p-6">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="mb-4">
+            <label for="{{ form.title.id_for_label }}" class="block font-medium text-sm text-gray-700 mb-1">
+              {{ form.title.label }}
+            </label>
+            {{ form.title|add_class:"w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" }}
+            {% if form.title.errors %}
+              <p class="text-red-500 text-sm mt-1">{{ form.title.errors }}</p>
             {% endif %}
           </div>
-        </div>
-      </div>
 
-      <!-- Subida de documento -->
-      <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
-          <div class="card-header bg-success text-white">
-            <h5 class="mb-0">Subir Nuevo Documento</h5>
+          <div class="mb-4">
+            <label for="{{ form.document_type.id_for_label }}" class="block font-medium text-sm text-gray-700 mb-1">
+              {{ form.document_type.label }}
+            </label>
+            {{ form.document_type|add_class:"w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200" }}
+            {% if form.document_type.errors %}
+              <p class="text-red-500 text-sm mt-1">{{ form.document_type.errors }}</p>
+            {% endif %}
           </div>
-          <div class="card-body">
-            <form method="post" enctype="multipart/form-data">
-              {% csrf_token %}
 
-              <div class="mb-3">
-                <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
-                {{ form.title }}
-                {% if form.title.errors %}
-                  <div class="text-danger">{{ form.title.errors }}</div>
-                {% endif %}
-              </div>
-
-              <div class="mb-3">
-                <label for="{{ form.document_type.id_for_label }}" class="form-label">{{ form.document_type.label }}</label>
-                {{ form.document_type }}
-                {% if form.document_type.errors %}
-                  <div class="text-danger">{{ form.document_type.errors }}</div>
-                {% endif %}
-              </div>
-
-              <div class="mb-3">
-                <label for="{{ form.file.id_for_label }}" class="form-label">{{ form.file.label }}</label>
-                {{ form.file }}
-                {% if form.file.errors %}
-                  <div class="text-danger">{{ form.file.errors }}</div>
-                {% endif %}
-              </div>
-
-              <button type="submit" class="btn btn-success w-100">Subir Archivo</button>
-            </form>
+          <div class="mb-6">
+            <label for="{{ form.file.id_for_label }}" class="block font-medium text-sm text-gray-700 mb-1">
+              {{ form.file.label }}
+            </label>
+            {{ form.file|add_class:"w-full text-sm text-gray-700 border border-gray-300 rounded-md p-2" }}
+            {% if form.file.errors %}
+              <p class="text-red-500 text-sm mt-1">{{ form.file.errors }}</p>
+            {% endif %}
           </div>
-        </div>
+
+          <button type="submit"
+                  class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md shadow">
+            {% trans "Subir Archivo" %}
+          </button>
+        </form>
       </div>
     </div>
-
-    <!-- Botón volver -->
-    <div class="text-center mt-3">
-      <a href="{% url 'teacher_courses' %}" class="btn btn-secondary">← Volver a Mis Cursos</a>
+  </div>
+  {% else %}
+  <!-- Diseño para ALUMNO: solo documentos centrado -->
+  <div class="flex justify-center">
+    <div class="w-full md:w-2/3 lg:w-1/2 bg-white rounded-xl shadow border border-gray-200">
+      <div class="bg-blue-600 text-white px-5 py-3 rounded-t-xl">
+        <h5 class="font-semibold text-lg">📄 {% trans "Documentos del Curso" %}</h5>
+      </div>
+      <div class="max-h-80 overflow-y-auto divide-y divide-gray-200">
+        {% if documents %}
+          {% for doc in documents %}
+            <div class="flex justify-between items-center px-5 py-3 hover:bg-gray-50 transition">
+              <div>
+                <p class="font-semibold text-gray-800">{{ doc.title }}</p>
+                <p class="text-sm text-gray-500">{{ doc.document_type }}</p>
+              </div>
+              <a href="{{ doc.file.url }}" target="_blank"
+                 class="text-sm font-medium text-blue-600 hover:underline">
+                {% trans "Descargar" %}
+              </a>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="flex flex-col items-center text-center text-gray-500 px-6 py-10">
+            <svg class="w-16 h-16 mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 4v16m8-8H4" />
+            </svg>
+            <p class="text-lg font-semibold">{% trans "No hay documentos disponibles." %}</p>
+            <p class="text-sm mt-1">{% trans "Cuando el docente suba material, aparecerá aquí." %}</p>
+          </div>
+        {% endif %}
+      </div>
     </div>
+  </div>
+  {% endif %}
+
+  <!-- Volver -->
+  <div class="text-center mt-10">
+    <a href="{% url 'teacher_courses' %}"
+       class="inline-block bg-gray-600 hover:bg-gray-700 text-white px-5 py-2 rounded-md shadow transition">
+      ← {% trans "Volver a Mis Cursos" %}
+    </a>
   </div>
 </div>
 {% endblock %}

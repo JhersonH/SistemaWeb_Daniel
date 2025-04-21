@@ -12,9 +12,11 @@ from document.forms import DocumentUploadForm
 from document.models import Document
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import PasswordChangeView, LoginView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.translation import gettext_lazy as _
+from teacher.decorators import role_required
 from teacher.forms import UserForm, TeacherForm
 from teacher.models import Teacher
 from django.utils.timezone import localtime
@@ -22,13 +24,16 @@ from django.utils.timezone import localtime
 import json
 import unicodedata
 
+class CustomLoginView(LoginView):
+    template_name = 'registration/login.html'
 
-def home_redirect(request):
-    return redirect('login')
+    def form_invalid(self, form):
+        messages.error(self.request, "Usuario o contraseña incorrecta.")
+        return super().form_invalid(form)
 
 @login_required
 def teacher_dashboard(request):
-    return render(request, 'dashboard/dashboard.html')
+    return render(request, 'dashboard/home_dashboard.html')
 
 @login_required
 def teacher_courses(request):
@@ -191,7 +196,6 @@ def teacher_schedule(request):
         'weekly_schedules': weekly_schedules
     })
 
-
 def normalize_string(value):
     return ''.join(
         c for c in unicodedata.normalize('NFD', value)
@@ -213,6 +217,7 @@ def get_day_index(day):
     }
     return days.get(day.lower(), 0)
 
+@role_required('teacher')
 @login_required
 def add_schedule(request):
     if request.method == 'POST':
@@ -236,6 +241,7 @@ def add_schedule(request):
 
     return redirect('teacher_schedule')
 
+@role_required('teacher')
 @login_required
 def delete_schedule(request, schedule_id):
     schedule = get_object_or_404(Schedule, id=schedule_id, class_assignment__teacher__user=request.user)
@@ -251,7 +257,7 @@ def teacher_profile(request):
     teacher = get_object_or_404(Teacher, user=request.user)
     return render(request, 'dashboard/teacher_profile.html', {'teacher': teacher})
 
-
+@role_required('teacher')
 @login_required
 def edit_teacher_profile(request):
     teacher = get_object_or_404(Teacher, user=request.user)
@@ -262,14 +268,17 @@ def edit_teacher_profile(request):
         teacher_form = TeacherForm(request.POST, request.FILES, instance=teacher)
 
         if user_form.is_valid() and teacher_form.is_valid():
-            user_form.save()
-            teacher_form.save()
-            messages.success(request, 'Perfil actualizado correctamente.')
+            if user_form.has_changed() or teacher_form.has_changed():
+                user_form.save()
+                teacher_form.save()
+                messages.success(request, 'Perfil actualizado correctamente.')
+            else:
+                messages.info(request, 'No se realizaron cambios en el perfil.')
+
+            # ✅ Redirige SOLO cuando está todo bien
             return redirect('teacher_profile')
-        else:
-            messages.error(request, 'Ocurrió un error al actualizar el perfil.')
+        # ⛔ No rediriges si hay errores, solo renderizas la vista actual
     else:
-        # Aquí aseguramos que los formularios se inicialicen con los datos actuales
         user_form = UserForm(instance=user)
         teacher_form = TeacherForm(instance=teacher)
 
@@ -283,3 +292,7 @@ def edit_teacher_profile(request):
 class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = 'dashboard/change_password.html'
     success_url = reverse_lazy('teacher_profile')
+
+    def form_valid(self, form):
+        messages.success(self.request, _('Tu contraseña ha sido actualizada correctamente.'))
+        return super().form_valid(form)

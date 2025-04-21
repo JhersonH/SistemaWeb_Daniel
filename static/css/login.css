@@ -1,3 +1,4 @@
+/* Estilos base (NO TOCAR) */
 html, body {
     height: 100%;
     margin: 0;
@@ -39,3 +40,69 @@ body {
     font-size: 0.85em;
     color: #6c757d;
 }
+
+/* Ajuste de animaciones */
+.animate__fadeInLeft,
+.animate__fadeInRight,
+.animate__fadeInUp {
+    animation-duration: 0.9s;
+    animation-fill-mode: both;
+}
+
+@media (max-width: 575.98px) {
+  .card.animate__animated {
+    animation-duration: 0.5s;
+    animation-name: fadeIn;
+  }
+
+  .card {
+    margin: 1rem 0.5rem !important;
+  }
+
+  .card img {
+    max-height: 90px !important;
+  }
+
+  .card h3 {
+    font-size: 1.15rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .card h4 {
+    font-size: 1.1rem !important;
+  }
+
+  .card p,
+  .form-label,
+  .form-text {
+    font-size: 0.8rem !important;
+  }
+
+  .form-control {
+    font-size: 0.85rem !important;
+    padding: 0.35rem 0.6rem !important;
+  }
+
+  .input-group-text i {
+    font-size: 1rem !important;
+  }
+
+  .btn {
+    font-size: 0.9rem !important;
+    padding: 0.45rem 0.75rem !important;
+  }
+
+  .text-center.mt-4 {
+    font-size: 0.75rem !important;
+  }
+
+  .input-group {
+    flex-wrap: nowrap;
+  }
+
+  /* Si hay separación excesiva arriba del logo */
+  .card .p-5 {
+    padding: 1rem !important;
+  }
+}
+

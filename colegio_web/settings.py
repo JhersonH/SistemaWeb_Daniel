@@ -43,9 +43,15 @@ INSTALLED_APPS = [
     'class_assignment',
     'schedule',
     'document',
+
+    'roles',
+    'preferences',
+
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -67,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'preferences.context_processors.dark_mode_context',
             ],
         },
     },
@@ -108,12 +115,19 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'America/Lima'
+LANGUAGE_CODE = 'es'
+LANGUAGES = [
+    ('es', 'Español'),
+    ('en', 'Inglés'),
+]
+LOCALE_PATHS = [BASE_DIR / "locale"]
+USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
-USE_I18N = True
+LANGUAGE_COOKIE_NAME = "django_language"
+
+TIME_ZONE = 'America/Lima'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -131,3 +145,6 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Para redirigir a tu template personalizado cuando ocurra un 403
+handler403 = 'teacher.views.custom_permission_denied_view'

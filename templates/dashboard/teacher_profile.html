@@ -1,87 +1,117 @@
 {% extends 'base/base_dashboard.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Perfil Docente{% endblock %}
+{% block title %}{% trans "Perfil Docente" %}{% endblock %}
 
 {% block inner_content %}
-<div class="container py-4">
-  <div class="row justify-content-center">
-    <div class="col-lg-9">
 
-      <div class="card shadow-lg border-0">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center px-4 py-3">
-          <h5 class="mb-0"><i class="bi bi-person-circle me-2"></i>Perfil del Docente</h5>
-          <a href="{% url 'edit_teacher_profile' %}" class="btn btn-outline-light btn-sm">
-            <i class="bi bi-pencil-square"></i> Editar Perfil
-          </a>
+{% if messages %}
+  <div data-alert class="space-y-2 mb-6">
+    {% for message in messages %}
+      <div class="{% if message.tags == 'success' %}bg-green-100 text-green-700
+                   {% elif message.tags == 'error' %}bg-red-100 text-red-700
+                   {% elif message.tags == 'info' %}bg-blue-100 text-blue-700
+                   {% endif %} px-4 py-3 rounded-md shadow">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<div class="max-w-7xl mx-auto px-4 py-10">
+  <div class="flex flex-col lg:grid lg:grid-cols-3 gap-6 items-start">
+
+    <!-- Sección de Usuario -->
+    <div class="bg-white shadow-xl rounded-2xl p-6 sm:p-8 text-center flex flex-col items-center w-full">
+      {% if teacher.photo %}
+        <img src="{{ teacher.photo.url }}" class="w-32 h-32 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full object-cover shadow-lg mb-4" alt="Foto de perfil">
+      {% else %}
+        <div class="w-32 h-32 sm:w-40 sm:h-40 bg-gray-200 rounded-full flex items-center justify-center shadow mb-4">
+          <i class="bi bi-person-fill text-5xl text-gray-400"></i>
         </div>
+      {% endif %}
 
-        <div class="card-body px-4 py-5">
+      <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 leading-snug">
+        {{ teacher.user.first_name }} {{ teacher.user.last_name }}
+      </h2>
+      <p class="text-sm sm:text-base text-gray-600 mt-2"><i class="bi bi-envelope me-1"></i> {{ teacher.user.email }}</p>
+      <p class="text-sm sm:text-base text-gray-600"><i class="bi bi-phone me-1"></i> {{ teacher.phone_number|default:"No hay información" }}</p>
+      <p class="text-sm sm:text-base text-gray-600 mb-4"><i class="bi bi-geo-alt me-1"></i> {{ teacher.address|default:"No hay información" }}</p>
 
-          <div class="row mb-4 align-items-center">
-            <div class="col-md-4 text-center">
-              {% if teacher.photo %}
-                <img src="{{ teacher.photo.url }}" class="rounded-circle shadow" style="width: 160px;" alt="Foto de perfil">
-              {% else %}
-                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 160px; height: 160px;">
-                  <i class="bi bi-person-fill display-4 text-muted"></i>
-                </div>
-              {% endif %}
-            </div>
-            <div class="col-md-8">
-              <h3 class="fw-bold text-dark">{{ teacher.user.first_name }} {{ teacher.user.last_name }}</h3>
-              <p class="text-muted mb-2"><i class="bi bi-envelope me-2"></i> {{ teacher.user.email }}</p>
-              <p class="text-muted mb-2"><i class="bi bi-phone me-2"></i> {{ teacher.phone_number|default:"No hay información" }}</p>
-              <p class="text-muted"><i class="bi bi-geo-alt me-2"></i> {{ teacher.address|default:"No hay información" }}</p>
-            </div>
-          </div>
+      <span class="inline-block bg-blue-100 text-blue-800 text-xs sm:text-sm font-semibold px-3 py-1 rounded-full mb-4">
+        <i class="bi bi-person-badge"></i> {% trans "Usuario Activo" %}
+      </span>
 
-          <hr class="mb-4">
+      <a href="{% url 'edit_teacher_profile' %}"
+         class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow text-sm sm:text-base">
+        <i class="bi bi-pencil-square"></i> {% trans "Editar Perfil" %}
+      </a>
+    </div>
 
-          <div class="row gy-4">
-            <div class="col-md-6">
-              <h6 class="text-primary fw-bold"><i class="bi bi-credit-card me-2"></i>DNI</h6>
-              <p class="text-secondary">{{ teacher.dni|default:"No hay información" }}</p>
-            </div>
-            <div class="col-md-6">
-              <h6 class="text-primary fw-bold"><i class="bi bi-calendar-event me-2"></i>Fecha de nacimiento</h6>
-              <p class="text-secondary">{{ teacher.birth_date|date:"d/m/Y"|default:"No hay información" }}</p>
-            </div>
-            <div class="col-md-6">
-              <h6 class="text-primary fw-bold"><i class="bi bi-mortarboard-fill me-2"></i>Nivel de enseñanza</h6>
-              <p class="text-secondary text-capitalize">{{ teacher.teaching_level|default:"No hay información" }}</p>
-            </div>
-            <div class="col-md-6">
-              <h6 class="text-primary fw-bold"><i class="bi bi-book-half me-2"></i>Área de enseñanza</h6>
-              <p class="text-secondary">{{ teacher.teaching_area|default:"No hay información" }}</p>
-            </div>
-            <div class="col-md-6">
-              <h6 class="text-primary fw-bold"><i class="bi bi-briefcase-fill me-2"></i>Condición laboral</h6>
-              <p class="text-secondary text-capitalize">{{ teacher.labor_condition|default:"No hay información" }}</p>
-            </div>
-            <div class="col-md-6">
-              <h6 class="text-primary fw-bold"><i class="bi bi-calendar-check-fill me-2"></i>Fecha de contratación</h6>
-              <p class="text-secondary">{{ teacher.hiring_date|date:"d/m/Y"|default:"No hay información" }}</p>
-            </div>
-            <div class="col-md-6">
-              <h6 class="text-primary fw-bold"><i class="bi bi-award-fill me-2"></i>Profesión</h6>
-              <p class="text-secondary">{{ teacher.profession|default:"No hay información" }}</p>
-            </div>
-            <div class="col-md-6">
-              <h6 class="text-primary fw-bold"><i class="bi bi-bookmark-check-fill me-2"></i>Grado académico</h6>
-              <p class="text-secondary">{{ teacher.academic_degree|default:"No hay información" }}</p>
-            </div>
-          </div>
+    <!-- Información Profesional -->
+    <div class="lg:col-span-2 bg-white shadow-xl rounded-2xl w-full">
+      <div class="bg-gradient-to-r from-blue-700 to-blue-500 text-white px-6 py-4 rounded-t-2xl text-lg sm:text-xl font-semibold flex items-center gap-2">
+        <i class="bi bi-info-circle-fill text-xl sm:text-2xl"></i> {% trans "Información Profesional" %}
+      </div>
 
-          {% if teacher.notes %}
-          <hr class="my-4">
-          <h6 class="text-primary fw-bold"><i class="bi bi-journal-text me-2"></i>Notas adicionales</h6>
-          <p class="text-secondary">{{ teacher.notes }}</p>
-          {% endif %}
-
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 px-6 py-6 sm:py-8 text-sm sm:text-base">
+        <div>
+          <p class="text-gray-800 font-semibold"><i class="bi bi-credit-card text-blue-600"></i> {% trans "DNI" %}</p>
+          <p class="text-gray-700">{{ teacher.dni|default:"No hay información" }}</p>
         </div>
+        <div>
+          <p class="text-gray-800 font-semibold"><i class="bi bi-calendar-event text-blue-600"></i> {% trans "Fecha de nacimiento" %}</p>
+          <p class="text-gray-700">{{ teacher.birth_date|date:"d/m/Y"|default:"No hay información" }}</p>
+        </div>
+        <div>
+          <p class="text-gray-800 font-semibold"><i class="bi bi-mortarboard-fill text-blue-600"></i> {% trans "Nivel de enseñanza" %}</p>
+          <span class="inline-block bg-blue-100 text-blue-800 text-xs sm:text-sm font-medium px-3 py-1 rounded-full">
+            {{ teacher.teaching_level|default:"No hay información" }}
+          </span>
+        </div>
+        <div>
+          <p class="text-gray-800 font-semibold"><i class="bi bi-book-half text-blue-600"></i> {% trans "Área de enseñanza" %}</p>
+          <p class="text-gray-700">{{ teacher.teaching_area|default:"No hay información" }}</p>
+        </div>
+        <div>
+          <p class="text-gray-800 font-semibold"><i class="bi bi-briefcase-fill text-blue-600"></i> {% trans "Condición laboral" %}</p>
+          <span class="inline-block bg-green-100 text-green-800 text-xs sm:text-sm font-medium px-3 py-1 rounded-full">
+            {{ teacher.labor_condition|default:"No hay información" }}
+          </span>
+        </div>
+        <div>
+          <p class="text-gray-800 font-semibold"><i class="bi bi-calendar-check-fill text-blue-600"></i> {% trans "Fecha de contratación" %}</p>
+          <p class="text-gray-700">{{ teacher.hiring_date|date:"d/m/Y"|default:"No hay información" }}</p>
+        </div>
+        <div>
+          <p class="text-gray-800 font-semibold"><i class="bi bi-award-fill text-blue-600"></i> {% trans "Profesión" %}</p>
+          <p class="text-gray-700">{{ teacher.profession|default:"No hay información" }}</p>
+        </div>
+        <div>
+          <p class="text-gray-800 font-semibold"><i class="bi bi-bookmark-check-fill text-blue-600"></i> {% trans "Grado académico" %}</p>
+          <p class="text-gray-700">{{ teacher.academic_degree|default:"No hay información" }}</p>
+        </div>
+        {% if teacher.notes %}
+        <div class="sm:col-span-2">
+          <p class="text-gray-800 font-semibold"><i class="bi bi-journal-text text-blue-600"></i> {% trans "Notas adicionales" %}</p>
+          <p class="text-gray-700">{{ teacher.notes }}</p>
+        </div>
+        {% endif %}
       </div>
     </div>
+
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  setTimeout(() => {
+    document.querySelectorAll('[data-alert]').forEach(alert => {
+      alert.classList.add('transition', 'opacity-0');
+      setTimeout(() => alert.remove(), 500);  // eliminar después de la animación
+    });
+  }, 3000);
+</script>
 {% endblock %}

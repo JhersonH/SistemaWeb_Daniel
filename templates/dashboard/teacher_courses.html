@@ -1,73 +1,97 @@
 {% extends 'base/base_dashboard.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Mis Cursos{% endblock %}
+{% block title %}{% trans "Mis Cursos" %}{% endblock %}
 
 {% block inner_content %}
-<div class="container-fluid">
-  <!-- Cursos del año actual -->
+<div class="p-6">
+
+  <!-- Cursos del Año Actual -->
   {% if current_year_courses %}
-    <h4 class="text-primary mt-4 mb-3">Cursos del Año {{ current_year }}</h4>
-    <div class="row justify-content-center">
-      {% for assignment in current_year_courses %}
-        <div class="col-md-4 col-lg-3 mb-4">
-          <a href="{% url 'course_detail' assignment.id %}" class="text-decoration-none text-reset">
-            <div class="card course-card shadow-sm h-100">
-              <div class="card-body">
-                <h5 class="card-title fw-bold text-primary">{{ assignment.course.name }}</h5>
-                <p class="card-text mb-0">
-                  <strong>Nivel:</strong> {{ assignment.level }}<br>
-                  <strong>Grado:</strong> {{ assignment.grade }}<br>
-                  <strong>Sección:</strong> {{ assignment.section }}<br>
-                  <strong>Año Académico:</strong> {{ assignment.academic_year }}
-                </p>
-              </div>
-            </div>
-          </a>
+    <h2 class="text-2xl font-bold text-blue-700 mb-6">{% trans "Cursos del Año" %} {{ current_year }}</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  {% for assignment in current_year_courses %}
+    <a href="{% url 'course_detail' assignment.id %}" class="block group transition duration-300 transform hover:-translate-y-1">
+      <div class="bg-white border border-gray-200 rounded-xl shadow-md p-4 h-full
+                  transition-all duration-300 group-hover:shadow-lg">
+
+        <!-- Título centrado en mayúsculas -->
+        <div class="flex flex-col items-center justify-center mb-4">
+          <i class="bi bi-book text-blue-600 text-3xl mb-1 transition group-hover:font-bold"></i>
+          <h3 class="text-center text-lg uppercase tracking-wide transition group-hover:font-bold">
+            {{ assignment.course.name }}
+          </h3>
         </div>
-      {% endfor %}
-    </div>
+
+        <!-- Información del curso -->
+        <ul class="text-base space-y-2 transition">
+          <li class="transition group-hover:font-bold">
+            <i class="bi bi-mortarboard-fill me-2"></i><strong>{% trans "Nivel" %}:</strong> {{ assignment.level }}
+          </li>
+          <li class="transition group-hover:font-bold">
+            <i class="bi bi-award-fill me-2"></i><strong>{% trans "Grado" %}:</strong> {{ assignment.grade }}
+          </li>
+          <li class="transition group-hover:font-bold">
+            <i class="bi bi-people-fill me-2"></i><strong>{% trans "Sección" %}:</strong> {{ assignment.section }}
+          </li>
+          <li class="transition group-hover:font-bold">
+            <i class="bi bi-calendar-week-fill me-2"></i><strong>{% trans "Año Académico" %}:</strong> {{ assignment.academic_year }}
+          </li>
+        </ul>
+
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
   {% endif %}
 
-  <!-- Paginación Año actual -->
+  <!-- Paginación -->
   {% if current_year_page_obj.has_other_pages %}
-    <div class="d-flex justify-content-center mb-4">
-      <ul class="pagination">
-        {% if current_year_page_obj.has_previous %}
-          <li class="page-item">
-            <a class="page-link" href="?year={{ current_year }}&page={{ current_year_page_obj.previous_page_number }}">Anterior</a>
-          </li>
-        {% endif %}
-        <li class="page-item disabled"><span class="page-link">Página {{ current_year_page_obj.number }} de {{ current_year_page_obj.paginator.num_pages }}</span></li>
-        {% if current_year_page_obj.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="?year={{ current_year }}&page={{ current_year_page_obj.next_page_number }}">Siguiente</a>
-          </li>
-        {% endif %}
-      </ul>
-    </div>
-  {% endif %}
+  <div class="flex justify-center mt-8">
+    <nav class="inline-flex rounded-md shadow-sm overflow-hidden border border-gray-300" aria-label="Pagination">
+
+      {% if current_year_page_obj.has_previous %}
+        <a href="?year={{ current_year }}&page={{ current_year_page_obj.previous_page_number }}"
+           class="px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 font-semibold text-sm border-r border-gray-300 transition">
+          ← {% trans "Anterior" %}
+        </a>
+      {% endif %}
+
+      <span class="px-5 py-2 bg-gray-100 text-gray-800 font-medium text-sm border-r border-gray-300">
+        {% trans "Página" %} {{ current_year_page_obj.number }} {% trans "de" %} {{ current_year_page_obj.paginator.num_pages }}
+      </span>
+
+      {% if current_year_page_obj.has_next %}
+        <a href="?year={{ current_year }}&page={{ current_year_page_obj.next_page_number }}"
+           class="px-4 py-2 bg-white text-gray-700 hover:bg-gray-100 font-semibold text-sm transition">
+          {% trans "Siguiente" %} →
+        </a>
+      {% endif %}
+
+    </nav>
+  </div>
+{% endif %}
+
 
   <!-- Cursos de años anteriores -->
   {% for year, assignments in past_years_courses.items %}
-    <h4 class="text-secondary mt-5 mb-3">Cursos del Año {{ year }}</h4>
-    <div class="row justify-content-center">
+    <h2 class="text-xl font-semibold text-gray-600 mt-10 mb-4 border-b pb-1 border-gray-200">{% trans "Cursos del Año" %} {{ year }}</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {% for assignment in assignments %}
-        <div class="col-md-4 col-lg-3 mb-4">
-          <div class="card course-card shadow-sm h-100">
-            <div class="card-body">
-              <h5 class="card-title fw-bold text-primary">{{ assignment.course.name }}</h5>
-              <p class="card-text">
-                <strong>Nivel:</strong> {{ assignment.level }}<br>
-                <strong>Grado:</strong> {{ assignment.grade }}<br>
-                <strong>Sección:</strong> {{ assignment.section }}<br>
-                <strong>Año Académico:</strong> {{ assignment.academic_year }}
-              </p>
-            </div>
-          </div>
+        <div class="bg-white rounded-xl shadow p-4 border hover:border-blue-300 transition">
+          <h3 class="text-lg font-bold text-blue-700 mb-2">{{ assignment.course.name }}</h3>
+          <ul class="text-sm text-gray-700 space-y-1">
+            <li><strong>{% trans "Nivel" %}:</strong> {{ assignment.level }}</li>
+            <li><strong>{% trans "Grado" %}:</strong> {{ assignment.grade }}</li>
+            <li><strong>{% trans "Sección" %}:</strong> {{ assignment.section }}</li>
+            <li><strong>{% trans "Año Académico" %}:</strong> {{ assignment.academic_year }}</li>
+          </ul>
         </div>
       {% endfor %}
     </div>
   {% endfor %}
+
 </div>
 {% endblock %}

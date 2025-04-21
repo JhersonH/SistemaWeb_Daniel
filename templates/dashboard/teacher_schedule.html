@@ -1,10 +1,12 @@
 {% extends 'base/base_dashboard.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Mis Horarios{% endblock %}
+{% block title %}{% trans "Mis Horarios" %}{% endblock %}
 
 {% block inner_content %}
 
+<!-- Mensajes -->
 {% if messages %}
   <div class="container mt-2">
     {% for message in messages %}
@@ -16,92 +18,90 @@
   </div>
 {% endif %}
 
-<div class="px-4 d-flex justify-content-between align-items-center mb-3">
-  <!-- Título -->
-  <h3 class="fw-bold text-primary">
-    <span class="d-none d-md-inline">📅 Mis Horarios</span>
-    <span class="d-inline d-md-none">Horarios</span>
-  </h3>
-
-  <!-- Botón modal -->
-  <button class="btn btn-success d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#addScheduleModal">
-    ➕ Registrar Horario
+<!-- Título y botón -->
+<div class="flex justify-between items-center px-4 py-4">
+  <h2 class="text-2xl font-bold text-blue-700 flex items-center gap-2">
+    <i class="bi bi-calendar-week-fill"></i> {% trans "Mis Horarios" %}
+  </h2>
+  {% if request.user.teacher.role.role_type == 'teacher' %}
+  <button class="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded shadow transition hidden md:block"
+          data-bs-toggle="modal" data-bs-target="#addScheduleModal">
+    ➕ {% trans "Registrar Horario" %}
   </button>
-  <button class="btn btn-outline-success btn-sm d-inline d-md-none" data-bs-toggle="modal" data-bs-target="#addScheduleModal" title="Nuevo horario">
+  <button class="btn btn-outline-success btn-sm block md:hidden" data-bs-toggle="modal" data-bs-target="#addScheduleModal" title="Nuevo horario">
     <i class="bi bi-plus-lg"></i>
   </button>
+  {% endif %}
 </div>
 
-  <!-- Calendario (visible solo en desktop) -->
-  <div id="calendar-wrapper" class="d-none d-md-block">
-    <div id="calendar"></div>
-  </div>
+<!-- Calendario para desktop -->
+<div class="hidden md:block px-4">
+  <div id="calendar"></div>
+</div>
 
-  <!-- Lista de clases en formato card (solo en mobile) -->
-  <div id="mobile-schedule" class="d-block d-md-none">
-    {% if weekly_schedules %}
-      {% for sched in weekly_schedules %}
-        <div class="card mb-3">
-          <div class="card-body d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="card-title text-primary mb-1">{{ sched.day_of_week }}</h6>
-              <p class="card-text mb-0"><strong>{{ sched.class_assignment.course.name }}</strong></p>
-              <p class="mb-0">⏰ {{ sched.start_time|time:"H:i" }} - {{ sched.end_time|time:"H:i" }}</p>
-            </div>
-            <form method="post" action="{% url 'delete_schedule' sched.id %}" onsubmit="return confirm('¿Estás seguro de eliminar este horario?');">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-sm btn-outline-danger ms-2">
-                <i class="bi bi-trash3"></i>
-              </button>
-            </form>
-          </div>
+<!-- Horarios en cards para móviles -->
+<div class="md:hidden px-4 space-y-4">
+  {% if weekly_schedules %}
+    {% for sched in weekly_schedules %}
+      <div class="bg-white rounded-lg shadow-md p-4 flex justify-between items-center">
+        <div>
+          <h6 class="text-sm text-blue-700 font-bold">{{ sched.day_of_week }}</h6>
+          <p class="text-base font-semibold">{{ sched.class_assignment.course.name }}</p>
+          <p class="text-gray-600 text-sm">⏰ {{ sched.start_time|time:"H:i" }} - {{ sched.end_time|time:"H:i" }}</p>
         </div>
-      {% endfor %}
-    {% else %}
-      <p class="text-muted">No tienes clases programadas hoy.</p>
-    {% endif %}
-  </div>
+        {% if request.user.teacher.role.role_type == 'teacher' %}
+        <form method="post" action="{% url 'delete_schedule' sched.id %}" onsubmit="return confirm('¿Estás seguro de eliminar este horario?');">
+          {% csrf_token %}
+          <button type="submit" class="text-red-600 hover:text-red-800 text-lg">
+            <i class="bi bi-trash3-fill"></i>
+          </button>
+        </form>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="text-gray-500">{% trans "No tienes clases programadas hoy" %}.</p>
+  {% endif %}
+</div>
 
-<!-- Modal: Registrar nuevo horario -->
-<div class="modal fade" id="addScheduleModal" tabindex="-1" aria-labelledby="addScheduleModalLabel" aria-hidden="true">
+{% if request.user.teacher.role.role_type == 'teacher' %}
+<!-- Modal Registrar -->
+<div class="modal fade" id="addScheduleModal" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <form method="post" action="{% url 'add_schedule' %}">
         {% csrf_token %}
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title" id="addScheduleModalLabel">Registrar Nuevo Horario</h5>
+        <div class="modal-header bg-green-600 text-white">
+          <h5 class="modal-title">{% trans "Registrar Nuevo Horario" %}</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body">
-          <!-- Aquí pondremos los campos del formulario más adelante -->
-          <div class="mb-3">
-            <label for="day" class="form-label">Día de la semana:</label>
-            <select name="day" id="day" class="form-select" required>
-              <option value="">Seleccione</option>
-              <option value="Lunes">Lunes</option>
-              <option value="Martes">Martes</option>
-              <option value="Miércoles">Miércoles</option>
-              <option value="Jueves">Jueves</option>
-              <option value="Viernes">Viernes</option>
-              <option value="Sábado">Sábado</option>
-              <option value="Domingo">Domingo</option>
+        <div class="modal-body space-y-4">
+          <div>
+            <label class="form-label">{% trans "Día de la semana" %}:</label>
+            <select name="day" class="form-select" required>
+              <option value="">{% trans "Seleccione" %}</option>
+              <option value="Lunes">{% trans "Lunes" %}</option>
+              <option value="Martes">{% trans "Martes" %}</option>
+              <option value="Miércoles">{% trans "Miércoles" %}</option>
+              <option value="Jueves">{% trans "Jueves" %}</option>
+              <option value="Viernes">{% trans "Viernes" %}</option>
+              <option value="Sábado">{% trans "Sábado" %}</option>
+              <option value="Domingo">{% trans "Domingo" %}</option>
             </select>
           </div>
-
           <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="start_time" class="form-label">Hora de inicio:</label>
-              <input type="time" name="start_time" id="start_time" class="form-control" required>
+            <div class="col-md-6">
+              <label>{% trans "Hora de inicio" %}:</label>
+              <input type="time" name="start_time" class="form-control" required>
             </div>
-            <div class="col-md-6 mb-3">
-              <label for="end_time" class="form-label">Hora de fin:</label>
-              <input type="time" name="end_time" id="end_time" class="form-control" required>
+            <div class="col-md-6">
+              <label>{% trans "Hora de fin" %}:</label>
+              <input type="time" name="end_time" class="form-control" required>
             </div>
           </div>
-
-          <div class="mb-3">
-            <label for="class_assignment" class="form-label">Curso:</label>
-            <select name="class_assignment" id="class_assignment" class="form-select" required>
+          <div>
+            <label>{% trans "Curso" %}:</label>
+            <select name="class_assignment" class="form-select" required>
               {% for assignment in assignments %}
                 <option value="{{ assignment.id }}">{{ assignment.course.name }} - {{ assignment.grade }}{{ assignment.section }}</option>
               {% endfor %}
@@ -109,20 +109,21 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-success">Guardar</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-success">{% trans "Guardar" %}</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Cancelar" %}</button>
         </div>
       </form>
     </div>
   </div>
 </div>
+{% endif %}
 
-<!-- Modal para ver eventos del día -->
-<div class="modal fade" id="calendarDayDetailsModal" tabindex="-1" aria-hidden="true">
+<!-- Modal Detalle del Día -->
+<div class="modal fade" id="calendarDayDetailsModal" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title">Clases del Día</h5>
+      <div class="modal-header bg-blue-700 text-white">
+        <h5 class="modal-title">{% trans "Clases del Día" %}</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body" id="calendarDayDetailsBody"></div>
@@ -130,6 +131,33 @@
   </div>
 </div>
 
+{% if request.user.teacher.role.role_type == 'teacher' %}
+<!-- MODAL: Confirmar eliminación de evento -->
+<div id="eventDeleteModal" class="fixed inset-0 bg-gray-900/40 hidden items-center justify-center z-50">
+  <div class="bg-white w-full max-w-md mx-4 rounded-lg shadow-lg p-6 animate-fade-in">
+    <form id="deleteEventForm" method="post">
+      {% csrf_token %}
+      <h3 class="text-lg font-semibold text-red-600 flex items-center gap-2 mb-4">
+        <i class="bi bi-exclamation-triangle-fill"></i> {% trans "Eliminar Evento" %}
+      </h3>
+      <p class="text-gray-700 mb-4">
+        ¿{% trans "Estás seguro de que deseas eliminar el evento" %} <span id="eventTitle" class="font-bold"></span>?
+      </p>
+      <div class="flex justify-end gap-3">
+        <button type="button"
+                onclick="closeModal('eventDeleteModal')"
+                class="px-4 py-2 text-gray-700 border rounded hover:bg-gray-100 transition">
+          {% trans "Cancelar" %}
+        </button>
+        <button type="submit"
+                class="px-4 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-700 transition">
+          {% trans "Sí, eliminar" %}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block scripts %}
@@ -152,9 +180,16 @@
       },
       events: {{ events_json|safe }},
 
+      eventClick: function(info) {
+        const event = info.event;
+        document.getElementById('eventTitle').innerText = event.title;
+        const form = document.getElementById('deleteEventForm');
+        form.action = `/schedules/delete/${event.id}/`;  // Ajusta esta ruta si es diferente
+        openModal('eventDeleteModal');
+      },
+
       moreLinkClick: function(info) {
         const events = info.allSegs.map(seg => seg.event);
-
         let content = `<ul class="list-group text-start">`;
         for (const event of events) {
           content += `
@@ -162,12 +197,14 @@
               <div>
                 <strong>${event.title}</strong>
               </div>
+              {% if request.user.teacher.role.role_type == 'a' %}
               <form method="post" action="/schedules/delete/${event.id}/" onsubmit="return confirm('¿Estás seguro de eliminar este horario?');">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 <button type="submit" class="btn btn-sm btn-outline-danger ms-2">
                   <i class="bi bi-trash3"></i>
                 </button>
               </form>
+              {% endif %}
             </li>`;
         }
         content += `</ul>`;
@@ -186,6 +223,20 @@
 
     calendar.render();
   });
+</script>
+
+<script>
+  function openModal(id) {
+    const el = document.getElementById(id);
+    el.classList.remove('hidden');
+    el.classList.add('flex');
+  }
+
+  function closeModal(id) {
+    const el = document.getElementById(id);
+    el.classList.add('hidden');
+    el.classList.remove('flex');
+  }
 </script>
 
 <script>

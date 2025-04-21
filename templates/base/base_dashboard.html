@@ -1,47 +1,96 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Dashboard | School System{% endblock %}
+{% block title %}{% trans "Principal | Sistema Escolar" %}{% endblock %}
 
 {% block content %}
-<div id="dashboardContainer" class="dashboard-container">
+<div id="dashboardContainer" class="flex h-screen overflow-hidden bg-gray-100">
 
   <!-- Sidebar -->
-  <nav class="sidebar">
-    <div class="sidebar-logo text-center">
-      <a href="{% url 'teacher_dashboard' %}" style="text-decoration: none; color: white;">
-        <img src="{% static 'img/logo.jpg' %}" alt="Logo Colegio" style="width: 70px; display: block; margin: 0 auto;">
-        <h5 style="margin-top: 10px;">Sistema Escolar</h5>
-      </a>
+  <aside id="sidebar"
+         class="w-64 bg-white shadow-md transition-all duration-300 ease-in-out flex flex-col justify-between z-40">
+    <div>
+      <div class="text-center mt-4">
+        <img src="{% static 'img/logo.jpg' %}" class="mx-auto w-20 mb-2" alt="Logo Colegio">
+        <h5 class="text-blue-700 font-bold text-sm">I.E. Micaela Bastidas</h5>
+      </div>
+      <ul class="mt-6 space-y-4 px-6">
+        <li>
+          <a href="{% url 'teacher_dashboard' %}"
+             class="flex items-center space-x-2 p-2 rounded-lg shadow transition font-medium
+                    {% if request.path == '/dashboard/' %}bg-black text-white{% else %}text-gray-700 hover:bg-black hover:text-white{% endif %}">
+            <i class="bi bi-house-door"></i><span class="text-base">{% trans "Inicio" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'teacher_courses' %}"
+             class="flex items-center space-x-2 p-2 rounded-lg shadow transition font-medium
+                    {% if '/dashboard/courses/' in request.path or '/dashboard/my-courses/' in request.path %}bg-black text-white{% else %}text-gray-700 hover:bg-black hover:text-white{% endif %}">
+            <i class="bi bi-journal-text"></i><span class="text-base">{% trans "Cursos" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'teacher_documents' %}"
+             class="flex items-center space-x-2 p-2 rounded-lg shadow transition font-medium
+                    {% if request.path == '/dashboard/documents/' %}bg-black text-white{% else %}text-gray-700 hover:bg-black hover:text-white{% endif %}">
+            <i class="bi bi-folder2-open"></i><span class="text-base">{% trans "Documentos" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'teacher_schedule' %}"
+             class="flex items-center space-x-2 p-2 rounded-lg shadow transition font-medium
+                    {% if request.path == '/dashboard/schedules/' %}bg-black text-white{% else %}text-gray-700 hover:bg-black hover:text-white{% endif %}">
+            <i class="bi bi-calendar-week"></i><span class="text-base">{% trans "Horarios" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'teacher_profile' %}"
+             class="flex items-center space-x-2 p-2 rounded-lg shadow transition font-medium
+                    {% if '/dashboard/profile/' in request.path or '/dashboard/profile/edit' in request.path %}bg-black text-white{% else %}text-gray-700 hover:bg-black hover:text-white{% endif %}">
+            <i class="bi bi-person-badge"></i><span class="text-base">{% trans "Perfil Docente" %}</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'configuration' %}"
+             class="flex items-center space-x-2 p-2 rounded-lg shadow transition font-medium
+                    {% if request.path == '/dashboard/configuration/' %}bg-black text-white{% else %}text-gray-700 hover:bg-black hover:text-white{% endif %}">
+            <i class="bi bi-gear-fill"></i><span class="text-base">{% trans "Configuración" %}</span>
+          </a>
+        </li>
+      </ul>
     </div>
-    <ul class="sidebar-menu">
-      <li><a href="{% url 'teacher_courses' %}">Mis Cursos</a></li>
-      <li><a href="{% url 'teacher_documents' %}">Documentos</a></li>
-      <li><a href="{% url 'teacher_schedule' %}">Horarios</a></li>
-      <li><a href="{% url 'teacher_profile' %}">Perfil Docente</a></li>
-      <li><a href="#">Configuración</a></li>
-    </ul>
-  </nav>
 
-  <!-- Main content -->
-  <div class="main-content">
-    <div class="dashboard-navbar">
-      <div>
-        <button id="toggleSidebar" class="toggle-sidebar-btn">☰</button>
-        <span class="user-label" title="{{ user.first_name }} {{ user.last_name }}">
-          Bienvenido, {{ user.first_name }} {{ user.last_name }}
+    <!-- Botón de salida -->
+    <form method="post" action="{% url 'logout' %}" class="p-6">
+      {% csrf_token %}
+      <button type="submit"
+              class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition">
+        <i class="bi bi-box-arrow-left me-2"></i>{% trans "Salir" %}
+      </button>
+    </form>
+  </aside>
+
+  <!-- Contenido principal -->
+  <div class="flex-1 flex flex-col">
+    <!-- Navbar superior -->
+    <header class="bg-white border-b shadow px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <!-- Botón toggle -->
+        <button id="toggleSidebar"
+                class="text-gray-700 text-2xl focus:outline-none transition hover:scale-105">
+          ☰
+        </button>
+        <span class="text-sm text-gray-800 font-medium">
+          {% trans "Bienvenido" %}, {{ user.first_name }} {{ user.last_name }}
         </span>
       </div>
-      <form method="post" action="{% url 'logout' %}" class="logout-form">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-outline-light btn-sm">Salir</button>
-      </form>
-    </div>
+    </header>
 
-    <div class="dashboard-body">
+    <!-- Contenido del dashboard -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-100">
       {% block inner_content %}{% endblock %}
-    </div>
+    </main>
   </div>
-
 </div>
 {% endblock %}

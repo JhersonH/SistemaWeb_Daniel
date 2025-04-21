@@ -21,7 +21,7 @@ def teacher_dashboard(request):
         form = DocumentUploadForm()
         form.fields['class_assignment'].queryset = assignments
 
-    return render(request, 'dashboard/dashboard.html', {
+    return render(request, 'dashboard/home_dashboard.html', {
         'user': user,
         'class_assignments': assignments,
         'documents': documents,
