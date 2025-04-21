@@ -4,37 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7782bd5-95d5-4fd8-a034-b272b3584fae" name="Changes" comment="Modules Update">
-      <change afterPath="$PROJECT_DIR$/preferences/context_processors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/preferences/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teacher/decorators.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/dashboard/settings.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/errors/403.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/colegio_web/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/colegio_web/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/colegio_web/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/colegio_web/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/document/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/document/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modelos.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teacher/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/teacher/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teacher/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/teacher/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teacher/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/teacher/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base/base_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base/base_dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard/change_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/change_password.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard/course_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/course_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/home_dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard/edit_teacher_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/edit_teacher_profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard/teacher_courses.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/teacher_courses.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard/teacher_documents.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/teacher_documents.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard/teacher_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/teacher_profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard/teacher_schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/teacher_schedule.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/login.html" afterDir="false" />
-    </list>
+    <list default="true" id="d7782bd5-95d5-4fd8-a034-b272b3584fae" name="Changes" comment="Modules Update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -170,7 +140,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745083067497</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Modules Update">
+      <option name="closed" value="true" />
+      <created>1745251049959</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1745251049959</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
