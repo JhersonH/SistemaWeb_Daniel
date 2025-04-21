@@ -1,0 +1,464 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-20 17:10-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: .\dashboard\views.py:297
+msgid "Tu contraseña ha sido actualizada correctamente."
+msgstr "Your password has been successfully updated."
+
+#: .\preferences\views.py:31
+msgid "Preferencias guardadas correctamente."
+msgstr "Preferences saved successfully."
+
+#: .\templates\base\base.html:8
+msgid "Sistema de Gestión Escolar"
+msgstr "School Management System"
+
+#: .\templates\base\base_dashboard.html:5
+#: .\templates\dashboard\home_dashboard.html:5
+msgid "Principal | Sistema Escolar"
+msgstr "Main | School System"
+
+#: .\templates\base\base_dashboard.html:23
+msgid "Inicio"
+msgstr "Home"
+
+#: .\templates\base\base_dashboard.html:30
+msgid "Cursos"
+msgstr "Courses"
+
+#: .\templates\base\base_dashboard.html:37
+msgid "Documentos"
+msgstr "Documents"
+
+#: .\templates\base\base_dashboard.html:44
+msgid "Horarios"
+msgstr "Schedules"
+
+#: .\templates\base\base_dashboard.html:51
+#: .\templates\dashboard\teacher_profile.html:5
+msgid "Perfil Docente"
+msgstr "Teaching Profile"
+
+#: .\templates\base\base_dashboard.html:58
+msgid "Configuración"
+msgstr "Configuration"
+
+#: .\templates\base\base_dashboard.html:69
+msgid "Salir"
+msgstr "Logout"
+
+#: .\templates\base\base_dashboard.html:85
+msgid "Bienvenido"
+msgstr "Welcome"
+
+#: .\templates\dashboard\change_password.html:6
+msgid "Cambio de Clave"
+msgstr "Password Change"
+
+#: .\templates\dashboard\change_password.html:15
+#: .\templates\dashboard\edit_teacher_profile.html:194
+msgid "Cambiar Contraseña"
+msgstr "Change Password"
+
+#: .\templates\dashboard\change_password.html:32
+msgid "Contraseña Actual"
+msgstr "Current Password"
+
+#: .\templates\dashboard\change_password.html:37
+msgid "Nueva Contraseña"
+msgstr "New Password"
+
+#: .\templates\dashboard\change_password.html:42
+msgid "Confirmar Nueva Contraseña"
+msgstr "Confirm New Password"
+
+#: .\templates\dashboard\change_password.html:48
+msgid "Actualizar Contraseña"
+msgstr "Update Password"
+
+#: .\templates\dashboard\course_detail.html:6
+msgid "Detalle del Curso"
+msgstr "Course Details"
+
+#: .\templates\dashboard\course_detail.html:15
+#: .\templates\dashboard\teacher_courses.html:33
+msgid "Grado"
+msgstr "grade"
+
+#: .\templates\dashboard\course_detail.html:15
+#: .\templates\dashboard\teacher_documents.html:84
+#: .\templates\dashboard\teacher_documents.html:120
+msgid "Año"
+msgstr "Year"
+
+#: .\templates\dashboard\course_detail.html:25
+#: .\templates\dashboard\teacher_documents.html:24
+msgid "Documentos Subidos"
+msgstr "Uploaded Documents"
+
+#: .\templates\dashboard\course_detail.html:37
+#: .\templates\dashboard\course_detail.html:112
+#: .\templates\dashboard\teacher_documents.html:98
+#: .\templates\dashboard\teacher_documents.html:124
+msgid "Descargar"
+msgstr "download"
+
+#: .\templates\dashboard\course_detail.html:42
+msgid "Aún no se han subido documentos para este curso."
+msgstr "No documents have been uploaded yet for this course."
+
+#: .\templates\dashboard\course_detail.html:51
+msgid "Subir Nuevo Documento"
+msgstr "Upload New Document"
+
+#: .\templates\dashboard\course_detail.html:89
+msgid "Subir Archivo"
+msgstr "Upload File"
+
+#: .\templates\dashboard\course_detail.html:100
+msgid "Documentos del Curso"
+msgstr "Course Documents"
+
+#: .\templates\dashboard\course_detail.html:122
+msgid "No hay documentos disponibles."
+msgstr "No documents available."
+
+#: .\templates\dashboard\course_detail.html:123
+msgid "Cuando el docente suba material, aparecerá aquí."
+msgstr "When the teacher uploads material, it will appear here."
+
+#: .\templates\dashboard\course_detail.html:135
+msgid "Volver a Mis Cursos"
+msgstr "Return to My Courses"
+
+#: .\templates\dashboard\edit_teacher_profile.html:5
+msgid "Editar Perfil Docente"
+msgstr "Edit Teacher Profile"
+
+#: .\templates\dashboard\edit_teacher_profile.html:14
+msgid "Perfil del Usuario"
+msgstr "User Profile"
+
+#: .\templates\dashboard\edit_teacher_profile.html:29
+msgid "Haz clic para subir una nueva foto"
+msgstr "Click to upload a new photo"
+
+#: .\templates\dashboard\edit_teacher_profile.html:39
+#: .\templates\dashboard\teacher_profile.html:55
+msgid "Información Profesional"
+msgstr "Professional Information"
+
+#: .\templates\dashboard\edit_teacher_profile.html:45
+msgid "Nombres"
+msgstr "Names"
+
+#: .\templates\dashboard\edit_teacher_profile.html:55
+msgid "Apellidos"
+msgstr "Last Name"
+
+#: .\templates\dashboard\edit_teacher_profile.html:65
+msgid "Correo electrónico"
+msgstr "Email"
+
+#: .\templates\dashboard\edit_teacher_profile.html:75
+#: .\templates\dashboard\teacher_profile.html:60
+msgid "DNI"
+msgstr "ID"
+
+#: .\templates\dashboard\edit_teacher_profile.html:85
+#: .\templates\dashboard\teacher_profile.html:64
+msgid "Fecha de nacimiento"
+msgstr "Birthdate"
+
+#: .\templates\dashboard\edit_teacher_profile.html:95
+msgid "Teléfono"
+msgstr "Phone"
+
+#: .\templates\dashboard\edit_teacher_profile.html:105
+msgid "Dirección"
+msgstr "Address"
+
+#: .\templates\dashboard\edit_teacher_profile.html:115
+#: .\templates\dashboard\teacher_profile.html:68
+msgid "Nivel de enseñanza"
+msgstr "Teaching level"
+
+#: .\templates\dashboard\edit_teacher_profile.html:128
+#: .\templates\dashboard\teacher_profile.html:74
+msgid "Área de enseñanza"
+msgstr "Teaching area"
+
+#: .\templates\dashboard\edit_teacher_profile.html:138
+#: .\templates\dashboard\teacher_profile.html:78
+msgid "Condición laboral"
+msgstr "Working condition"
+
+#: .\templates\dashboard\edit_teacher_profile.html:151
+#: .\templates\dashboard\teacher_profile.html:84
+msgid "Fecha de contratación"
+msgstr "Hire date"
+
+#: .\templates\dashboard\edit_teacher_profile.html:161
+#: .\templates\dashboard\teacher_profile.html:88
+msgid "Profesión"
+msgstr "Profession"
+
+#: .\templates\dashboard\edit_teacher_profile.html:171
+#: .\templates\dashboard\teacher_profile.html:92
+msgid "Grado académico"
+msgstr "Academic degree"
+
+#: .\templates\dashboard\edit_teacher_profile.html:181
+#: .\templates\dashboard\teacher_profile.html:97
+msgid "Notas adicionales"
+msgstr "Additional notes"
+
+#: .\templates\dashboard\edit_teacher_profile.html:198
+#: .\templates\dashboard\settings.html:63
+msgid "Guardar Cambios"
+msgstr "Save Changes"
+
+#: .\templates\dashboard\settings.html:5
+msgid "Configuración del Usuario"
+msgstr "User Configuration"
+
+#: .\templates\dashboard\settings.html:10
+msgid "Configuración Personal"
+msgstr "Personal Settings"
+
+#: .\templates\dashboard\settings.html:26
+msgid "Idioma Preferido"
+msgstr "Preferred Language"
+
+#: .\templates\dashboard\settings.html:28
+msgid "Español"
+msgstr "Spanish"
+
+#: .\templates\dashboard\settings.html:29
+msgid "Inglés"
+msgstr "English"
+
+#: .\templates\dashboard\settings.html:35
+msgid "Notificaciones por correo"
+msgstr "Email notifications"
+
+#: .\templates\dashboard\settings.html:40
+msgid "Activadas"
+msgstr "Activated"
+
+#: .\templates\dashboard\settings.html:45
+msgid "Desactivadas"
+msgstr "Disabled"
+
+#: .\templates\dashboard\settings.html:52
+msgid "Tema de la Interfaz"
+msgstr "Interface Theme"
+
+#: .\templates\dashboard\settings.html:55
+msgid "Claro"
+msgstr "Light"
+
+#: .\templates\dashboard\settings.html:56
+msgid "Oscuro"
+msgstr "Dark"
+
+#: .\templates\dashboard\teacher_courses.html:5
+msgid "Mis Cursos"
+msgstr "My Courses"
+
+#: .\templates\dashboard\teacher_courses.html:12
+msgid "Cursos del Año"
+msgstr "Courses of the Year"
+
+#: .\templates\dashboard\teacher_courses.html:30
+msgid "Nivel"
+msgstr "Level"
+
+#: .\templates\dashboard\teacher_courses.html:36
+msgid "Sección"
+msgstr "Section"
+
+#: .\templates\dashboard\teacher_courses.html:39
+msgid "Año Académico"
+msgstr "Academic Year"
+
+#: .\templates\dashboard\teacher_courses.html:58
+#: .\templates\dashboard\teacher_documents.html:175
+msgid "Anterior"
+msgstr "Previous"
+
+#: .\templates\dashboard\teacher_courses.html:63
+#: .\templates\dashboard\teacher_documents.html:179
+msgid "Página"
+msgstr "Page"
+
+#: .\templates\dashboard\teacher_courses.html:63
+#: .\templates\dashboard\teacher_documents.html:179
+msgid "de"
+msgstr "from"
+
+#: .\templates\dashboard\teacher_courses.html:69
+#: .\templates\dashboard\teacher_documents.html:184
+msgid "Siguiente"
+msgstr "Next"
+
+#: .\templates\dashboard\teacher_documents.html:5
+msgid "Mis Documentos"
+msgstr "My Documents"
+
+#: .\templates\dashboard\teacher_documents.html:33
+msgid "Filtrar por curso"
+msgstr "Filter by course"
+
+#: .\templates\dashboard\teacher_documents.html:51
+msgid "Filtrar por año académico"
+msgstr "Filter by academic year"
+
+#: .\templates\dashboard\teacher_documents.html:70
+msgid "Limpiar"
+msgstr "Clean"
+
+#: .\templates\dashboard\teacher_documents.html:81
+#: .\templates\dashboard\teacher_documents.html:117
+msgid "Título"
+msgstr "Title"
+
+#: .\templates\dashboard\teacher_documents.html:82
+#: .\templates\dashboard\teacher_documents.html:118
+msgid "Tipo"
+msgstr "Type"
+
+#: .\templates\dashboard\teacher_documents.html:83
+#: .\templates\dashboard\teacher_documents.html:119
+#: .\templates\dashboard\teacher_schedule.html:103
+msgid "Curso"
+msgstr "Course"
+
+#: .\templates\dashboard\teacher_documents.html:85
+msgid "Acciones"
+msgstr "Actions"
+
+#: .\templates\dashboard\teacher_documents.html:104
+#: .\templates\dashboard\teacher_documents.html:130
+msgid "Eliminar"
+msgstr "Eliminate"
+
+#: .\templates\dashboard\teacher_documents.html:145
+msgid "Confirmar Eliminación"
+msgstr "Confirm Deletion"
+
+#: .\templates\dashboard\teacher_documents.html:148
+msgid "Estás seguro de que deseas eliminar el documento"
+msgstr "Are you sure you want to delete the document"
+
+#: .\templates\dashboard\teacher_documents.html:154
+#: .\templates\dashboard\teacher_schedule.html:113
+#: .\templates\dashboard\teacher_schedule.html:150
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: .\templates\dashboard\teacher_documents.html:158
+#: .\templates\dashboard\teacher_schedule.html:154
+msgid "Sí, eliminar"
+msgstr "Yes, delete"
+
+#: .\templates\dashboard\teacher_profile.html:43
+msgid "Usuario Activo"
+msgstr "Active User"
+
+#: .\templates\dashboard\teacher_profile.html:48
+msgid "Editar Perfil"
+msgstr "Edit Profile"
+
+#: .\templates\dashboard\teacher_schedule.html:5
+#: .\templates\dashboard\teacher_schedule.html:24
+msgid "Mis Horarios"
+msgstr "My Schedules"
+
+#: .\templates\dashboard\teacher_schedule.html:29
+msgid "Registrar Horario"
+msgstr "Register Schedule"
+
+#: .\templates\dashboard\teacher_schedule.html:63
+msgid "No tienes clases programadas hoy"
+msgstr "You have no classes scheduled today"
+
+#: .\templates\dashboard\teacher_schedule.html:75
+msgid "Registrar Nuevo Horario"
+msgstr "Register New Schedule"
+
+#: .\templates\dashboard\teacher_schedule.html:80
+msgid "Día de la semana"
+msgstr "Day of the week"
+
+#: .\templates\dashboard\teacher_schedule.html:82
+msgid "Seleccione"
+msgstr "Select"
+
+#: .\templates\dashboard\teacher_schedule.html:83
+msgid "Lunes"
+msgstr "Monday"
+
+#: .\templates\dashboard\teacher_schedule.html:84
+msgid "Martes"
+msgstr "Tuesday"
+
+#: .\templates\dashboard\teacher_schedule.html:85
+msgid "Miércoles"
+msgstr "Wednesday"
+
+#: .\templates\dashboard\teacher_schedule.html:86
+msgid "Jueves"
+msgstr "Thursday"
+
+#: .\templates\dashboard\teacher_schedule.html:87
+msgid "Viernes"
+msgstr "Friday"
+
+#: .\templates\dashboard\teacher_schedule.html:88
+msgid "Sábado"
+msgstr "Saturday"
+
+#: .\templates\dashboard\teacher_schedule.html:89
+msgid "Domingo"
+msgstr "Sunday"
+
+#: .\templates\dashboard\teacher_schedule.html:94
+msgid "Hora de inicio"
+msgstr "Start time"
+
+#: .\templates\dashboard\teacher_schedule.html:98
+msgid "Hora de fin"
+msgstr "End time"
+
+#: .\templates\dashboard\teacher_schedule.html:112
+msgid "Guardar"
+msgstr "Save"
+
+#: .\templates\dashboard\teacher_schedule.html:126
+msgid "Clases del Día"
+msgstr "Classes of the Day"
+
+#: .\templates\dashboard\teacher_schedule.html:141
+msgid "Eliminar Evento"
+msgstr "Delete Event"
+
+#: .\templates\dashboard\teacher_schedule.html:144
+msgid "Estás seguro de que deseas eliminar el evento"
+msgstr "Are you sure you want to delete the event"
