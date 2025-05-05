@@ -37,7 +37,7 @@
           <select id="course" name="course"
                   onchange="document.getElementById('filterForm').submit();"
                   class="w-full border border-gray-300 rounded-md pl-10 pr-3 py-2 focus:ring focus:ring-blue-200">
-            <option value="">Todos</option>
+            <option value="">{% trans "Todos" %}</option>
             {% for course in all_courses %}
               <option value="{{ course }}" {% if course == course_filter %}selected{% endif %}>{{ course }}</option>
             {% endfor %}
@@ -55,7 +55,7 @@
           <select id="year" name="year"
                   onchange="document.getElementById('filterForm').submit();"
                   class="w-full border border-gray-300 rounded-md pl-10 pr-3 py-2 focus:ring focus:ring-blue-200">
-            <option value="">Todos</option>
+            <option value="">{% trans "Todos" %}</option>
             {% for year in all_years %}
               <option value="{{ year }}" {% if year == year_filter %}selected{% endif %}>{{ year }}</option>
             {% endfor %}

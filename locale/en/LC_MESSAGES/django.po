@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-20 17:10-0500\n"
+"POT-Creation-Date: 2025-05-04 22:09-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: .\dashboard\views.py:297
+
+#: .\dashboard\views.py:354
 msgid "Tu contraseña ha sido actualizada correctamente."
 msgstr "Your password has been successfully updated."
 
-#: .\preferences\views.py:31
+#: .\preferences\views.py:32
 msgid "Preferencias guardadas correctamente."
 msgstr "Preferences saved successfully."
 
@@ -30,7 +31,6 @@ msgid "Sistema de Gestión Escolar"
 msgstr "School Management System"
 
 #: .\templates\base\base_dashboard.html:5
-#: .\templates\dashboard\home_dashboard.html:5
 msgid "Principal | Sistema Escolar"
 msgstr "Main | School System"
 
@@ -98,6 +98,7 @@ msgstr "Course Details"
 
 #: .\templates\dashboard\course_detail.html:15
 #: .\templates\dashboard\teacher_courses.html:33
+#: .\templates\dashboard\teacher_courses.html:87
 msgid "Grado"
 msgstr "grade"
 
@@ -230,9 +231,49 @@ msgid "Notas adicionales"
 msgstr "Additional notes"
 
 #: .\templates\dashboard\edit_teacher_profile.html:198
-#: .\templates\dashboard\settings.html:63
+#: .\templates\dashboard\settings.html:36
 msgid "Guardar Cambios"
 msgstr "Save Changes"
+
+#: .\templates\dashboard\home_dashboard.html:5
+msgid "Panel Principal | Sistema Escolar"
+msgstr "Main | School System"
+
+#: .\templates\dashboard\home_dashboard.html:19
+msgid "Cursos por Nivel"
+msgstr "Courses by Level"
+
+#: .\templates\dashboard\home_dashboard.html:22
+msgid "Distribución por nivel educativo"
+msgstr "Distribution by Educational Level"
+
+#: .\templates\dashboard\home_dashboard.html:38
+msgid "Documentos por Tipo"
+msgstr "Uploaded Documents"
+
+#: .\templates\dashboard\home_dashboard.html:41
+msgid "Cantidad de documentos subidos por categoría"
+msgstr "Number of documents uploaded per category"
+
+#: .\templates\dashboard\home_dashboard.html:54
+msgid "Clases por Día"
+msgstr "Classes of the Day"
+
+#: .\templates\dashboard\home_dashboard.html:57
+msgid "Cantidad de clases programadas en la semana"
+msgstr "You have no classes scheduled today"
+
+#: .\templates\dashboard\home_dashboard.html:71
+msgid "Horas Totales por Día"
+msgstr "Total Hours per Day"
+
+#: .\templates\dashboard\home_dashboard.html:74
+msgid "Duración total de clases por día de la semana"
+msgstr "Total class duration per day of the week"
+
+#: .\templates\dashboard\home_dashboard.html:82
+msgid "Próximamente más métricas..."
+msgstr "More metrics coming soon..."
 
 #: .\templates\dashboard\settings.html:5
 msgid "Configuración del Usuario"
@@ -254,47 +295,27 @@ msgstr "Spanish"
 msgid "Inglés"
 msgstr "English"
 
-#: .\templates\dashboard\settings.html:35
-msgid "Notificaciones por correo"
-msgstr "Email notifications"
-
-#: .\templates\dashboard\settings.html:40
-msgid "Activadas"
-msgstr "Activated"
-
-#: .\templates\dashboard\settings.html:45
-msgid "Desactivadas"
-msgstr "Disabled"
-
-#: .\templates\dashboard\settings.html:52
-msgid "Tema de la Interfaz"
-msgstr "Interface Theme"
-
-#: .\templates\dashboard\settings.html:55
-msgid "Claro"
-msgstr "Light"
-
-#: .\templates\dashboard\settings.html:56
-msgid "Oscuro"
-msgstr "Dark"
-
 #: .\templates\dashboard\teacher_courses.html:5
 msgid "Mis Cursos"
 msgstr "My Courses"
 
 #: .\templates\dashboard\teacher_courses.html:12
+#: .\templates\dashboard\teacher_courses.html:80
 msgid "Cursos del Año"
 msgstr "Courses of the Year"
 
 #: .\templates\dashboard\teacher_courses.html:30
+#: .\templates\dashboard\teacher_courses.html:86
 msgid "Nivel"
 msgstr "Level"
 
 #: .\templates\dashboard\teacher_courses.html:36
+#: .\templates\dashboard\teacher_courses.html:88
 msgid "Sección"
 msgstr "Section"
 
 #: .\templates\dashboard\teacher_courses.html:39
+#: .\templates\dashboard\teacher_courses.html:89
 msgid "Año Académico"
 msgstr "Academic Year"
 
@@ -326,6 +347,11 @@ msgstr "My Documents"
 msgid "Filtrar por curso"
 msgstr "Filter by course"
 
+#: .\templates\dashboard\teacher_documents.html:40
+#: .\templates\dashboard\teacher_documents.html:58
+msgid "Todos"
+msgstr "All"
+
 #: .\templates\dashboard\teacher_documents.html:51
 msgid "Filtrar por año académico"
 msgstr "Filter by academic year"
@@ -346,7 +372,7 @@ msgstr "Type"
 
 #: .\templates\dashboard\teacher_documents.html:83
 #: .\templates\dashboard\teacher_documents.html:119
-#: .\templates\dashboard\teacher_schedule.html:103
+#: .\templates\dashboard\teacher_schedule.html:101
 msgid "Curso"
 msgstr "Course"
 
@@ -368,13 +394,13 @@ msgid "Estás seguro de que deseas eliminar el documento"
 msgstr "Are you sure you want to delete the document"
 
 #: .\templates\dashboard\teacher_documents.html:154
-#: .\templates\dashboard\teacher_schedule.html:113
-#: .\templates\dashboard\teacher_schedule.html:150
+#: .\templates\dashboard\teacher_schedule.html:111
+#: .\templates\dashboard\teacher_schedule.html:148
 msgid "Cancelar"
 msgstr "Cancel"
 
 #: .\templates\dashboard\teacher_documents.html:158
-#: .\templates\dashboard\teacher_schedule.html:154
+#: .\templates\dashboard\teacher_schedule.html:152
 msgid "Sí, eliminar"
 msgstr "Yes, delete"
 
@@ -431,34 +457,50 @@ msgstr "Thursday"
 msgid "Viernes"
 msgstr "Friday"
 
-#: .\templates\dashboard\teacher_schedule.html:88
-msgid "Sábado"
-msgstr "Saturday"
-
-#: .\templates\dashboard\teacher_schedule.html:89
-msgid "Domingo"
-msgstr "Sunday"
-
-#: .\templates\dashboard\teacher_schedule.html:94
+#: .\templates\dashboard\teacher_schedule.html:92
 msgid "Hora de inicio"
 msgstr "Start time"
 
-#: .\templates\dashboard\teacher_schedule.html:98
+#: .\templates\dashboard\teacher_schedule.html:96
 msgid "Hora de fin"
 msgstr "End time"
 
-#: .\templates\dashboard\teacher_schedule.html:112
+#: .\templates\dashboard\teacher_schedule.html:110
 msgid "Guardar"
 msgstr "Save"
 
-#: .\templates\dashboard\teacher_schedule.html:126
+#: .\templates\dashboard\teacher_schedule.html:124
 msgid "Clases del Día"
 msgstr "Classes of the Day"
 
-#: .\templates\dashboard\teacher_schedule.html:141
+#: .\templates\dashboard\teacher_schedule.html:139
 msgid "Eliminar Evento"
 msgstr "Delete Event"
 
-#: .\templates\dashboard\teacher_schedule.html:144
+#: .\templates\dashboard\teacher_schedule.html:142
 msgid "Estás seguro de que deseas eliminar el evento"
 msgstr "Are you sure you want to delete the event"
+
+#~ msgid "Notificaciones por correo"
+#~ msgstr "Email notifications"
+
+#~ msgid "Activadas"
+#~ msgstr "Activated"
+
+#~ msgid "Desactivadas"
+#~ msgstr "Disabled"
+
+#~ msgid "Tema de la Interfaz"
+#~ msgstr "Interface Theme"
+
+#~ msgid "Claro"
+#~ msgstr "Light"
+
+#~ msgid "Oscuro"
+#~ msgstr "Dark"
+
+#~ msgid "Sábado"
+#~ msgstr "Saturday"
+
+#~ msgid "Domingo"
+#~ msgstr "Sunday"

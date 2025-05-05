@@ -20,7 +20,8 @@ from teacher.decorators import role_required
 from teacher.forms import UserForm, TeacherForm
 from teacher.models import Teacher
 from django.utils.timezone import localtime
-
+from collections import Counter
+from datetime import timedelta
 import json
 import unicodedata
 
@@ -33,7 +34,63 @@ class CustomLoginView(LoginView):
 
 @login_required
 def teacher_dashboard(request):
-    return render(request, 'dashboard/home_dashboard.html')
+    user = request.user
+
+    # Clases asignadas
+    assignments = ClassAssignment.objects.filter(teacher__user=user)
+
+    # Cursos por nivel
+    level_counts = {'primaria': 0, 'secundaria': 0}
+    for assignment in assignments:
+        level_counts[assignment.level] += 1
+
+    courses_levels_labels = json.dumps(['Primaria', 'Secundaria'])
+    courses_levels_data = [level_counts['primaria'], level_counts['secundaria']]
+
+    # Documentos por tipo
+    documents = Document.objects.filter(class_assignment__in=assignments)
+    doc_types = {'evaluacion': 0, 'material': 0, 'reporte': 0}
+    for doc in documents:
+        doc_types[doc.document_type] += 1
+
+    documents_types_labels = json.dumps(['Evaluación', 'Material', 'Reporte'])
+    documents_types_data = [doc_types['evaluacion'], doc_types['material'], doc_types['reporte']]
+
+    # Clases por día
+    schedules = Schedule.objects.filter(class_assignment__in=assignments)
+    day_counts = Counter(schedule.day_of_week.lower() for schedule in schedules)
+    days_order = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes']
+
+    schedules_labels = json.dumps([day.capitalize() for day in days_order])
+    schedules_data = [day_counts.get(day, 0) for day in days_order]
+
+    # Duración total por día
+    durations_by_day = {day: timedelta() for day in days_order}
+
+    for sched in schedules:
+        day = sched.day_of_week.lower()
+        start = sched.start_time
+        end = sched.end_time
+
+        # Calcular duración de la clase
+        start_delta = timedelta(hours=start.hour, minutes=start.minute)
+        end_delta = timedelta(hours=end.hour, minutes=end.minute)
+        durations_by_day[day] += (end_delta - start_delta)
+
+    # Convertir a horas reales con decimales exactos
+    minutes_per_day_data = [int(durations_by_day[day].total_seconds() // 60) for day in days_order]
+
+    context = {
+        'courses_levels_labels': courses_levels_labels,
+        'courses_levels_data': courses_levels_data,
+        'documents_types_labels': documents_types_labels,
+        'documents_types_data': documents_types_data,
+        'schedules_labels': schedules_labels,
+        'schedules_data': schedules_data,
+        'hours_per_day_data': minutes_per_day_data
+    }
+
+    return render(request, 'dashboard/home_dashboard.html', context)
 
 @login_required
 def teacher_courses(request):
